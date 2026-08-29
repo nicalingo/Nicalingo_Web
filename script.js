@@ -20,34 +20,44 @@ if(year){
 
 
 /* ==========================================================
-   ✨ CURSOR GLOW
+   CURSOR GLOW
 ========================================================== */
 
 (function cursorGlow(){
 
-  const glow =
-    document.getElementById('cursorGlow');
+  const glow = document.getElementById('cursorGlow');
 
   if(!glow){
-    console.log('❌ No se encontró #cursorGlow');
     return;
   }
 
-  console.log('✅ Cursor Glow iniciado');
+  if(
+    window.matchMedia &&
+    window.matchMedia('(pointer: coarse)').matches
+  ){
+    return;
+  }
+
+  if(prefersReducedMotion){
+    return;
+  }
+
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+
+  let currentX = targetX;
+  let currentY = targetY;
 
 
   window.addEventListener(
     'mousemove',
     function(event){
 
-      glow.classList.add('is-active');
+      targetX = event.clientX;
+      targetY = event.clientY;
 
-      glow.style.transform =
-        `translate3d(
-          ${event.clientX}px,
-          ${event.clientY}px,
-          0
-        )`;
+      glow.classList.add('is-active');
 
     },
     {passive:true}
@@ -57,14 +67,30 @@ if(year){
   document.addEventListener(
     'mouseleave',
     function(){
-
       glow.classList.remove('is-active');
-
     }
   );
 
 
-})();
+  function animate(){
+
+    currentX +=
+      (targetX - currentX) * 0.1;
+
+    currentY +=
+      (targetY - currentY) * 0.1;
+
+
+    glow.style.transform =
+      `translate(${currentX}px, ${currentY}px)`;
+
+
+    requestAnimationFrame(animate);
+
+  }
+
+
+  animate();
 
 })();
 
@@ -335,50 +361,21 @@ if(year){
 
   document.querySelectorAll('.card').forEach(function(card){
 
-card.addEventListener('mousemove', function(event){
+    card.addEventListener('mousemove', function(event){
 
-  const rect =
-    card.getBoundingClientRect();
+      const rect = card.getBoundingClientRect();
 
+      const rotateX =
+        ((event.clientY - rect.top - rect.height / 2) / rect.height) * -5;
 
-  /* Posición de la luz */
+      const rotateY =
+        ((event.clientX - rect.left - rect.width / 2) / rect.width) * 5;
 
-  const x =
-    ((event.clientX - rect.left) / rect.width) * 100;
+      card.style.transform =
+        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
 
-  const y =
-    ((event.clientY - rect.top) / rect.height) * 100;
+    });
 
-
-  card.style.setProperty(
-    '--card-x',
-    `${x}%`
-  );
-
-  card.style.setProperty(
-    '--card-y',
-    `${y}%`
-  );
-
-
-  /* Movimiento 3D */
-
-  const rotateX =
-    ((event.clientY - rect.top - rect.height / 2)
-      / rect.height) * -5;
-
-  const rotateY =
-    ((event.clientX - rect.left - rect.width / 2)
-      / rect.width) * 5;
-
-
-  card.style.transform =
-    `perspective(800px)
-     rotateX(${rotateX}deg)
-     rotateY(${rotateY}deg)
-     translateY(-6px)`;
-
-});
 
     card.addEventListener('mouseleave', function(){
       card.style.transform = '';
