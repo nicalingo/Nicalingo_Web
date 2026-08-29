@@ -3,288 +3,336 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NicaLingo — Aprende las lenguas de Nicaragua jugando</title>
-<meta name="description" content="NicaLingo es la plataforma gamificada para revitalizar y aprender las lenguas indígenas de Nicaragua, con historia, cultura y comunidad.">
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<title>NicaLingo</title>
+
+<link rel="icon" href="favicon.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--verde:#69B31E;
+--verde2:#7FBA4A;
+--coral:#F65C28;
+--magenta:#D22054;
+--morado:#A05ACF;
+--cian:#05ADD2;
+--amarillo:#F8DF23;
+--azul:#244699;
+--cafe:#491309;
+--fondo:#FFF8E6;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Manrope',sans-serif;
+background:var(--fondo);
+color:var(--cafe);
+overflow-x:hidden;
+}
+
+h1,h2,h3{
+font-family:'Baloo 2',cursive;
+}
+
+/* HEADER */
+header{
+position:fixed;
+top:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+z-index:1000;
+transition:.3s;
+}
+
+header.scrolled{
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+padding:10px 40px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:bold;
+font-size:22px;
+}
+
+.logo img{width:40px;}
+
+nav{
+display:flex;
+gap:25px;
+}
+
+nav a{
+text-decoration:none;
+color:var(--cafe);
+font-weight:600;
+}
+
+.btn{
+background:var(--verde);
+color:white;
+padding:10px 20px;
+border-radius:25px;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* HERO */
+.hero{
+margin-top:100px;
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+padding:60px 40px;
+}
+
+.hero-text{
+flex:1;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:20px;
+}
+
+.hero p{
+margin-bottom:20px;
+}
+
+.hero img{
+width:350px;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-15px);}
+}
+
+/* CARDS */
+.section{
+padding:80px 40px;
+text-align:center;
+}
+
+.cards{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+margin-top:30px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+width:250px;
+transition:.3s;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.card:hover{
+transform:translateY(-10px) rotate(1deg);
+}
+
+/* DARK SECTION */
+.dark{
+background:var(--azul);
+color:white;
+}
+
+/* FOOTER */
+footer{
+background:#eee;
+padding:40px;
+text-align:center;
+}
+
+/* MENU MOBILE */
+.menu-toggle{
+display:none;
+font-size:25px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+nav{
+display:none;
+flex-direction:column;
+position:absolute;
+top:70px;
+background:white;
+width:100%;
+left:0;
+padding:20px;
+}
+nav.active{display:flex;}
+.menu-toggle{display:block;}
+.hero{flex-direction:column;}
+.hero img{margin-top:30px;}
+}
+
+/* SCROLL ANIMATION */
+.fade{
+opacity:0;
+transform:translateY(30px);
+transition:1s;
+}
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* GLOW CURSOR */
+.glow{
+position:fixed;
+width:300px;
+height:300px;
+background:radial-gradient(circle, rgba(248,223,35,0.2) 0%, transparent 60%);
+pointer-events:none;
+border-radius:50%;
+z-index:0;
+}
+</style>
 </head>
+
 <body>
 
-<!-- Luz sutil que sigue al cursor -->
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<div class="glow" id="glow"></div>
 
-<!-- ============ SPRITE DE ÍCONOS ============ -->
-<svg style="display:none" aria-hidden="true">
-  <!-- Módulos de aprendizaje -->
-  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="2.5" y="13" width="4.5" height="7" rx="2" fill="currentColor" stroke="currentColor" stroke-width="2"/><rect x="17" y="13" width="4.5" height="7" rx="2" fill="currentColor" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 18v3.5M9 21.5h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-  <symbol id="i-bubbles" viewBox="0 0 24 24"><rect x="2" y="4" width="13" height="9" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 13v3.2L9.6 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="11.5" width="12" height="8.5" rx="3" fill="currentColor" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l1-5L16 4l4 4L9 19l-5 1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" stroke="currentColor" stroke-width="2"/></symbol>
-  <!-- Ecosistema -->
-  <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5.5C10 4 6.5 3.5 3.5 4v14.5C6.5 18 10 18.5 12 20c2-1.5 5.5-2 8.5-1.5V4c-3-.5-6.5 0-8.5 1.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 5.5V20" stroke="currentColor" stroke-width="2"/></symbol>
-  <symbol id="i-community" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c.4-3.4 2.6-5.3 5.5-5.3S13.6 16.6 14 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14.7 14.6c2 .2 3.6 1.7 3.9 4.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-  <symbol id="i-volcano" viewBox="0 0 24 24"><path d="M4 20l6-13 2 4 2-4 6 13z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 10.5c.8-1 1.7-1 2.5-1.6M14.2 10.6c-.6-1.1-1.3-1.6-2-2.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="4" r="1.4" fill="currentColor"/></symbol>
-  <!-- Barra superior / gamificación -->
-  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5S3.5 15 3.5 9.2C3.5 5.9 6 4 8.6 4c1.5 0 3 .8 3.4 2 .4-1.2 1.9-2 3.4-2 2.6 0 5.1 1.9 5.1 5.2 0 5.8-8.5 11.3-8.5 11.3z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2.5c1 3 4.5 4.7 4.5 9a6.5 6.5 0 0 1-13 0c0-2 1-3.3 2-4.5-.1 1.4.6 2.1 1.4 2.3-.4-2.6.9-4.9 3-5.3-.4 1.4 0 2.3.9 3.1.4-1.7 1-3 1.2-4.6z" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
-  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="currentColor" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.2v9.6M9.5 9.3c0-1 1.1-1.8 2.5-1.8s2.5.7 2.5 1.6c0 2.3-5 1-5 3.2 0 1 1.1 1.7 2.5 1.7s2.5-.7 2.5-1.7" stroke="#491309" stroke-width="1.4" stroke-linecap="round" fill="none"/></symbol>
-  <!-- Docentes -->
-  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 4.5 22 9l-10 4.5L2 9z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 11v4.5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M21 10v5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
-  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9" y="2.5" width="6" height="3.5" rx="1.4" fill="currentColor" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 13l2.3 2.3L15.5 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4.6l1.8 2H19.5A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
-  <!-- Sombrero / lentes / hoja para sección mascota -->
-  <symbol id="i-hat" viewBox="0 0 24 24"><path d="M4 15.5c1.5-5.5 4.7-9 8-9s6.5 3.5 8 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M2 15.5h20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
-  <symbol id="i-glasses" viewBox="0 0 24 24"><circle cx="6.5" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="13" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 12h3M2.5 12l2-2.5M21.5 12l-2-2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
-  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 4C10 4 4 9.5 4 17.5 14 17.5 20 12.5 20 4z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M6 18C9 13 12 10 17 6" fill="none" stroke="#FFF8E6" stroke-width="1.4" stroke-linecap="round"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8.5l6 3.5-6 3.5z" fill="currentColor"/></symbol>
-  <symbol id="blob-shape" viewBox="0 0 200 200">
-    <g fill="currentColor">
-      <ellipse cx="100" cy="35" rx="14" ry="20" transform="rotate(-10 100 35)"/>
-      <ellipse cx="140" cy="45" rx="12" ry="18" transform="rotate(20 140 45)"/>
-      <ellipse cx="65" cy="50" rx="11" ry="17" transform="rotate(-35 65 50)"/>
-      <ellipse cx="40" cy="90" rx="13" ry="19" transform="rotate(-5 40 90)"/>
-      <ellipse cx="80" cy="95" rx="16" ry="22" transform="rotate(2 80 95)"/>
-      <ellipse cx="118" cy="80" rx="10" ry="14" transform="rotate(30 118 80)"/>
-      <ellipse cx="150" cy="95" rx="14" ry="20" transform="rotate(-8 150 95)"/>
-      <ellipse cx="160" cy="130" rx="10" ry="15" transform="rotate(15 160 130)"/>
-      <ellipse cx="45" cy="130" rx="9" ry="13" transform="rotate(-25 45 130)"/>
-      <ellipse cx="80" cy="140" rx="10" ry="14" transform="rotate(-5 80 140)"/>
-      <ellipse cx="118" cy="135" rx="15" ry="21" transform="rotate(10 118 135)"/>
-      <ellipse cx="65" cy="165" rx="9" ry="14" transform="rotate(-40 65 165)"/>
-      <ellipse cx="105" cy="170" rx="13" ry="18" transform="rotate(-15 105 170)"/>
-    </g>
-  </symbol>
-</svg>
+<header id="header">
+<div class="logo">
+<img src="coco-logo.png">
+NicaLingo
+</div>
 
-<!-- ============ HEADER ============ -->
-<header class="site-header" id="siteHeader">
-  <div class="wrap header-inner">
-    <a href="#top" class="brand">
-      <img src="assets/coco-logo.png" alt="" class="brand-mark">
-      <span class="brand-name">Nica<em>Lingo</em></span>
-    </a>
-    <nav class="main-nav" id="mainNav">
-      <a href="#ecosistema">Ecosistema</a>
-      <a href="#aprender">Cómo aprenderás</a>
-      <a href="#docentes">Docentes</a>
-      <a href="#equipo">Equipo</a>
-    </nav>
-    <a href="#cta" class="btn btn-primary btn-small">Comenzar gratis</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+<nav id="nav">
+<a href="#">Ecosistema</a>
+<a href="#">Cómo aprenderás</a>
+<a href="#">Docentes</a>
+<a href="#">Equipo</a>
+<a class="btn" href="#">Comenzar gratis</a>
+</nav>
 </header>
 
-<main id="top">
+<!-- HERO -->
+<section class="hero">
+<div class="hero-text">
+<h1>Aprende las lenguas de Nicaragua jugando</h1>
+<p>Microaprendizaje + historia + héroes + leyendas en una experiencia gamificada única.</p>
+<a class="btn" href="#">Comenzar gratis</a>
+<a class="btn" style="background:var(--coral)" href="#">Cómo funciona</a>
+</div>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="wrap hero-inner">
-      <div class="hero-copy reveal">
-        <span class="eyebrow">Educación · Cultura · Identidad nica</span>
-        <h1>Aprende las lenguas de <span class="text-underline">Nicaragua</span> jugando</h1>
-        <p class="hero-lead">NicaLingo mezcla microaprendizaje con la historia, los héroes y las leyendas del país, para cerrar la brecha lingüístico-cultural con una mascota que celebra cada paso contigo.</p>
-        <div class="hero-actions">
-          <a href="#cta" class="btn btn-primary">Comenzar gratis <svg class="icon" width="18" height="18"><use href="#i-arrow"/></svg></a>
-          <a href="#aprender" class="btn btn-ghost"><svg class="icon" width="18" height="18"><use href="#i-play"/></svg> Cómo funciona</a>
-        </div>
-        <div class="hero-pills">
-          <span class="pill" style="--pc:#F65C28"><svg class="icon" width="16" height="16"><use href="#i-headphones"/></svg>Listening</span>
-          <span class="pill" style="--pc:#D22054"><svg class="icon" width="16" height="16"><use href="#i-mic"/></svg>Speaking</span>
-          <span class="pill" style="--pc:#244699"><svg class="icon" width="16" height="16"><use href="#i-bubbles"/></svg>Grammar</span>
-          <span class="pill" style="--pc:#69B31E"><svg class="icon" width="16" height="16"><use href="#i-pencil"/></svg>Writing</span>
-        </div>
-      </div>
-      <div class="hero-visual reveal" style="--delay:.15s">
-        <svg class="blob-decor blob-1" viewBox="0 0 200 200" style="color:#A05ACF" aria-hidden="true"><use href="#blob-shape"/></svg>
-        <svg class="blob-decor blob-2" viewBox="0 0 200 200" style="color:#05ADD2" aria-hidden="true"><use href="#blob-shape"/></svg>
-        <div class="medallion">
-          <img src="assets/coco-hero.jpg" alt="Coco, la mascota de NicaLingo, sonriendo con sombrero, lentes y una hoja" class="mascot-img">
-        </div>
-        <span class="float-chip chip-life"><svg class="icon" width="16" height="16"><use href="#i-heart"/></svg> 5 vidas</span>
-        <span class="float-chip chip-streak"><svg class="icon" width="16" height="16"><use href="#i-flame"/></svg> 12 días de racha</span>
-        <span class="float-chip chip-coin"><svg class="icon" width="16" height="16"><use href="#i-coin"/></svg> Monedas</span>
-      </div>
-    </div>
-    <div class="divider divider-zigzag-green" aria-hidden="true"></div>
-  </section>
+<img src="coco-hero.png" alt="Coco">
+</section>
 
-  <!-- ============ ECOSISTEMA DE IDENTIDAD ============ -->
-  <section class="section" id="ecosistema">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow eyebrow-magenta">Propuesta de valor</span>
-        <h2>Un ecosistema de identidad, no solo vocabulario</h2>
-        <p class="section-lead">A diferencia de otras apps de idiomas, NicaLingo sumerge a cada usuario en el contexto nicaragüense: su historia, su gente y sus lugares.</p>
-      </div>
-      <div class="card-grid card-grid-3">
-        <article class="card reveal">
-          <div class="icon-badge" style="--bc:#D22054"><svg class="icon" width="28" height="28"><use href="#i-book"/></svg></div>
-          <h3>Contenido histórico</h3>
-          <p>Lecturas y ejercicios basados en héroes, mártires, la Revolución y las leyendas populares del país.</p>
-        </article>
-        <article class="card reveal" style="--delay:.1s">
-          <div class="icon-badge" style="--bc:#69B31E"><svg class="icon" width="28" height="28"><use href="#i-community"/></svg></div>
-          <h3>Comunidad digital</h3>
-          <p>Un espacio para compartir logros y frases propias, fomentando el orgullo por las raíces indígenas.</p>
-        </article>
-        <article class="card reveal" style="--delay:.2s">
-          <div class="icon-badge" style="--bc:#05ADD2"><svg class="icon" width="28" height="28"><use href="#i-volcano"/></svg></div>
-          <h3>Turismo cultural</h3>
-          <p>Traducciones e historias de lugares emblemáticos, para descubrir Nicaragua mientras aprendes.</p>
-        </article>
-      </div>
-    </div>
-    <div class="divider divider-wave-coral" aria-hidden="true"></div>
-  </section>
+<!-- ECOSISTEMA -->
+<section class="section fade">
+<h2>Ecosistema de Identidad</h2>
+<div class="cards">
+<div class="card">Contenido Histórico</div>
+<div class="card">Comunidad Digital</div>
+<div class="card">Turismo Cultural</div>
+</div>
+</section>
 
-  <!-- ============ CÓMO SE APRENDE ============ -->
-  <section class="section section-alt" id="aprender">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow eyebrow-ocean">Modelo pedagógico</span>
-        <h2>Microaprendizaje con Coco a tu lado</h2>
-        <p class="section-lead">Lecciones cortas y constantes, organizadas en cuatro módulos de competencia, desde niveles iniciales hasta avanzados.</p>
-      </div>
-      <div class="card-grid card-grid-4">
-        <article class="card card-compact reveal">
-          <div class="icon-badge" style="--bc:#FFC151"><svg class="icon" width="26" height="26" style="color:#491309"><use href="#i-headphones"/></svg></div>
-          <h3>Listening</h3>
-          <p>Coco reproduce un audio y eliges la palabra correcta entre las imágenes de la lección.</p>
-        </article>
-        <article class="card card-compact reveal" style="--delay:.08s">
-          <div class="icon-badge" style="--bc:#F65C28"><svg class="icon" width="26" height="26"><use href="#i-mic"/></svg></div>
-          <h3>Speaking</h3>
-          <p>Un botón de micrófono te escucha: si lo haces bien, Coco baila; si no, pone cara de duda.</p>
-        </article>
-        <article class="card card-compact reveal" style="--delay:.16s">
-          <div class="icon-badge" style="--bc:#244699"><svg class="icon" width="26" height="26"><use href="#i-bubbles"/></svg></div>
-          <h3>Grammar</h3>
-          <p>Ordena burbujas de texto para armar oraciones completas sobre lo que acabas de estudiar.</p>
-        </article>
-        <article class="card card-compact reveal" style="--delay:.24s">
-          <div class="icon-badge" style="--bc:#7FBA4A"><svg class="icon" width="26" height="26"><use href="#i-pencil"/></svg></div>
-          <h3>Writing</h3>
-          <p>Ejercicios de escritura guiada que refuerzan cada palabra nueva de la lengua indígena.</p>
-        </article>
-      </div>
+<!-- APRENDIZAJE -->
+<section class="section fade">
+<h2>Cómo se aprende</h2>
+<div class="cards">
+<div class="card">Listening 🎧</div>
+<div class="card">Speaking 🎤</div>
+<div class="card">Grammar 💬</div>
+<div class="card">Writing ✏️</div>
+</div>
+</section>
 
-      <div class="topbar-preview reveal">
-        <div class="topbar-preview-text">
-          <h3>Tu progreso, siempre visible</h3>
-          <p>Vidas, racha activa y monedas para personalizar a Coco: la barra superior te acompaña en cada lección del mapa de niveles.</p>
-        </div>
-        <div class="topbar-mock">
-          <span><svg class="icon" width="20" height="20"><use href="#i-heart"/></svg> 5</span>
-          <span><svg class="icon" width="20" height="20"><use href="#i-flame"/></svg> 12</span>
-          <span><svg class="icon" width="20" height="20"><use href="#i-coin"/></svg> 240</span>
-        </div>
-      </div>
-    </div>
-    <div class="divider divider-zigzag-navy" aria-hidden="true"></div>
-  </section>
+<!-- DOCENTES -->
+<section class="section dark fade">
+<h2>Portal Educativo</h2>
+<p>Generador de tests y biblioteca de recursos</p>
+<br>
+<p style="font-size:12px;">
+Ley No. 28 · Protección de Lenguas · Eje N°4 MINED
+</p>
+</section>
 
-  <!-- ============ DOCENTES ============ -->
-  <section class="section section-dark" id="docentes">
-    <div class="wrap">
-      <div class="section-head section-head-light reveal">
-        <span class="eyebrow eyebrow-sun">Portal educativo</span>
-        <h2>Una herramienta también para el aula</h2>
-        <p class="section-lead">Pensado para integrarse al currículo escolar: el cuerpo docente crea, descarga y aplica evaluaciones personalizadas sin fricción.</p>
-      </div>
-      <div class="card-grid card-grid-2">
-        <article class="card card-dark reveal">
-          <div class="icon-badge" style="--bc:#F8DF23"><svg class="icon" width="28" height="28" style="color:#491309"><use href="#i-clipboard"/></svg></div>
-          <h3>Generador de tests</h3>
-          <p>Un botón flotante para crear evaluaciones rápidas a partir del contenido ya visto en clase.</p>
-        </article>
-        <article class="card card-dark reveal" style="--delay:.1s">
-          <div class="icon-badge" style="--bc:#05ADD2"><svg class="icon" width="28" height="28"><use href="#i-folder"/></svg></div>
-          <h3>Biblioteca de recursos</h3>
-          <p>Lecciones y archivos listos para descargar y proyectar en el salón de clases.</p>
-        </article>
-      </div>
-      <div class="legal-strip">
-        <span>Ley de Autonomía · Ley No. 28</span>
-        <span>Ley de Protección de Lenguas Indígenas</span>
-        <span>Eje N.º 4 · MINED</span>
-      </div>
-    </div>
-  </section>
+<!-- EQUIPO -->
+<section class="section fade">
+<h2>Quiénes somos</h2>
+<p>
+Sinskira representa respeto a la sabiduría ancestral.  
+NicaLingo une identidad nacional con aprendizaje moderno.  
+Coco simboliza cultura, estudio y conexión con la tierra.
+</p>
+</section>
 
-  <!-- ============ QUIÉNES SOMOS ============ -->
-  <section class="section" id="equipo">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow eyebrow-leaf">Quiénes somos</span>
-        <h2>Un nombre, un equipo y una mascota con significado</h2>
-      </div>
-      <div class="card-grid card-grid-3">
-        <article class="card reveal">
-          <h3>El equipo: Sinskira</h3>
-          <p>Su nombre nace de las raíces lingüísticas de la Costa Caribe. Sinskira no es solo una palabra, es un valor: mostrar respeto, inclinarse ante la sabiduría de los ancestros y reconocer al otro.</p>
-        </article>
-        <article class="card reveal" style="--delay:.1s">
-          <h3>La app: NicaLingo</h3>
-          <p>Una combinación entre la identidad nacional (<em>Nica</em>) y la raíz latina <em>lingua</em>. Fácil de recordar, moderno, y con Nicaragua en el centro del aprendizaje multicultural.</p>
-        </article>
-        <article class="card reveal" style="--delay:.2s">
-          <h3>La mascota: Coco</h3>
-          <p>Un fruto emblemático de nuestras costas guía todo el viaje de aprendizaje.</p>
-          <ul class="meaning-list">
-            <li><span class="icon-badge icon-badge-sm" style="--bc:#FFC151"><svg class="icon" width="16" height="16" style="color:#491309"><use href="#i-hat"/></svg></span>El sombrero: el nicaragüense trabajador, campesino y artesano.</li>
-            <li><span class="icon-badge icon-badge-sm" style="--bc:#244699"><svg class="icon" width="16" height="16"><use href="#i-glasses"/></svg></span>Los lentes: sabiduría, estudio y enfoque académico.</li>
-            <li><span class="icon-badge icon-badge-sm" style="--bc:#69B31E"><svg class="icon" width="16" height="16"><use href="#i-leaf"/></svg></span>La hoja: vida, crecimiento y conexión con la tierra indígena.</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-    <div class="divider divider-wave-navy" aria-hidden="true"></div>
-  </section>
+<!-- CTA -->
+<section class="section fade">
+<h2>Únete a la revitalización lingüística de Nicaragua</h2>
+<br>
+<a class="btn" href="#">Comenzar ahora</a>
+</section>
 
-  <!-- ============ CTA FINAL ============ -->
-  <section class="section cta-final" id="cta">
-    <div class="wrap cta-inner reveal">
-      <img src="assets/coco-logo.png" alt="" class="cta-mascot">
-      <h2>Únete a la revitalización lingüística de Nicaragua</h2>
-      <p>Gratis para estudiantes y escuelas desde el primer día. Aprende, juega y lleva contigo la voz de tus raíces.</p>
-      <a href="#top" class="btn btn-primary btn-large">Comenzar gratis <svg class="icon" width="20" height="20"><use href="#i-arrow"/></svg></a>
-    </div>
-  </section>
-
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <div class="footer-brand">
-      <img src="assets/coco-logo.png" alt="" class="brand-mark">
-      <span class="brand-name">Nica<em>Lingo</em></span>
-      <p>Un proyecto del equipo Sinskira para revitalizar las lenguas indígenas de Nicaragua.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Producto</h4>
-      <a href="#ecosistema">Ecosistema de identidad</a>
-      <a href="#aprender">Cómo aprenderás</a>
-      <a href="#docentes">Portal docente</a>
-    </div>
-    <div class="footer-col">
-      <h4>Equipo</h4>
-      <a href="#equipo">Sinskira</a>
-      <a href="#equipo">La mascota Coco</a>
-    </div>
-  </div>
-  <div class="wrap footer-bottom">
-    <span>© <span id="year"></span> NicaLingo · Equipo Sinskira</span>
-    <span>Hecho con orgullo en Nicaragua 🥥</span>
-  </div>
+<footer>
+<img src="coco-logo.png" width="40"><br><br>
+© NicaLingo · Equipo Sinskira
 </footer>
 
-<script src="js/script.js"></script>
+<script>
+
+/* MENU */
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("active");
+}
+
+/* HEADER SCROLL */
+window.addEventListener("scroll",()=>{
+const header=document.getElementById("header");
+header.classList.toggle("scrolled",window.scrollY>50);
+});
+
+/* SCROLL FADE */
+const faders=document.querySelectorAll(".fade");
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+});
+faders.forEach(el=>observer.observe(el));
+
+/* GLOW FOLLOW */
+const glow=document.getElementById("glow");
+let x=0,y=0;
+
+document.addEventListener("mousemove",(e)=>{
+x=e.clientX;
+y=e.clientY;
+});
+
+function animate(){
+glow.style.left=x-150+"px";
+glow.style.top=y-150+"px";
+requestAnimationFrame(animate);
+}
+animate();
+
+</script>
+
 </body>
 </html>
