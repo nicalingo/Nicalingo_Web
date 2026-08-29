@@ -1,802 +1,852 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>NicaLingo — Cultura, Tecnología e Identidad</title>
+    <title>NicaLingo | Aprende las lenguas de Nicaragua</title>
 
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.png">
+    <link rel="icon" href="favicon.png">
 
-  <!-- Fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Manrope:wght@300;400;600;700&display=swap"
-    rel="stylesheet"
-  >
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- =====================================================
-       CURSOR GLOW
-       ===================================================== -->
-  <div class="cursor-glow" id="cursorGlow"></div>
+    <!-- =====================================================
+         CURSOR GLOW
+    ====================================================== -->
+
+    <div class="cursor-glow" id="cursorGlow"></div>
 
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
-  <header class="site-header" id="siteHeader">
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-    <div class="wrap header-inner">
+    <header class="site-header" id="siteHeader">
 
-      <a href="#inicio" class="brand">
+        <div class="wrap header-inner">
 
-        <img
-          src="coco-logo.png"
-          alt="Logo de NicaLingo"
-          class="brand-mark"
-        >
+            <a href="#inicio" class="brand">
 
-        <span class="brand-name">
-          Nica<span>Lingo</span>
-        </span>
+                <img
+                    src="coco-logo.png"
+                    alt="Logo de NicaLingo"
+                    class="brand-mark"
+                >
 
-      </a>
+                <span class="brand-name">
+                    Nica<span>Lingo</span>
+                </span>
 
-
-      <nav class="main-nav" id="mainNav">
-
-        <a href="#ecosistema">
-          Ecosistema
-        </a>
-
-        <a href="#aprendizaje">
-          Cómo aprenderás
-        </a>
-
-        <a href="#docentes">
-          Docentes
-        </a>
-
-        <a href="#equipo">
-          Equipo
-        </a>
-
-        <a
-          href="#comenzar"
-          class="btn btn-primary btn-small"
-        >
-          Comenzar gratis
-        </a>
-
-      </nav>
-
-
-      <button
-        class="nav-toggle"
-        id="navToggle"
-        type="button"
-        aria-label="Abrir menú"
-        aria-expanded="false"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <!-- =====================================================
-       CONTENIDO
-       ===================================================== -->
-  <main id="inicio">
-
-
-    <!-- ===================================================
-         HERO
-         =================================================== -->
-    <section class="hero">
-
-      <div class="wrap hero-inner">
-
-        <div class="hero-copy reveal">
-
-          <span class="eyebrow">
-            ✷ Cultura · Tecnología · Identidad
-          </span>
-
-
-          <h1>
-            Tu idioma.
-            <span class="text-underline">
-              Tu identidad.
-            </span>
-            <br>
-            Tu futuro.
-          </h1>
-
-
-          <p class="hero-lead">
-            Aprende las lenguas de Nicaragua a través de una
-            experiencia interactiva que conecta cultura,
-            historia, tecnología y comunidad.
-          </p>
-
-
-          <div class="hero-actions">
-
-            <a
-              href="#comenzar"
-              class="btn btn-primary btn-large"
-            >
-              Comenzar gratis
-              <span>→</span>
             </a>
 
 
-            <a
-              href="#aprendizaje"
-              class="btn btn-ghost btn-large"
+            <button
+                class="nav-toggle"
+                id="navToggle"
+                aria-label="Abrir menú"
+                aria-expanded="false"
             >
-              Cómo funciona
-            </a>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-          </div>
 
+            <nav class="main-nav" id="mainNav">
 
-          <div class="hero-pills">
+                <a href="#ecosistema">
+                    Ecosistema
+                </a>
 
-            <span
-              class="pill"
-              style="--pc:var(--magenta)"
-            >
-              ✦ Cultura
-            </span>
+                <a href="#aprendizaje">
+                    Cómo aprenderás
+                </a>
 
-            <span
-              class="pill"
-              style="--pc:var(--coral)"
-            >
-              ✦ Gamificación
-            </span>
+                <a href="#docentes">
+                    Docentes
+                </a>
 
-            <span
-              class="pill"
-              style="--pc:var(--ocean)"
-            >
-              ✦ Comunidad
-            </span>
+                <a href="#equipo">
+                    Equipo
+                </a>
 
-          </div>
+                <a href="#comenzar" class="btn btn-small">
+                    Comenzar gratis
+                </a>
+
+            </nav>
 
         </div>
 
+    </header>
 
-        <!-- COCO -->
-        <div
-          class="hero-visual reveal"
-          style="--delay:.15s"
+
+
+    <main id="inicio">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-decoration hero-decoration-1"></div>
+            <div class="hero-decoration hero-decoration-2"></div>
+            <div class="hero-decoration hero-decoration-3"></div>
+
+
+            <div class="wrap hero-inner">
+
+
+                <div class="hero-copy reveal">
+
+                    <span class="eyebrow">
+                        ✷ Cultura · Tecnología · Identidad
+                    </span>
+
+
+                    <h1>
+                        Tu idioma.
+                        <span class="text-underline">
+                            Tu identidad.
+                        </span>
+                    </h1>
+
+
+                    <p class="hero-lead">
+                        Aprende las lenguas de Nicaragua a través de
+                        microaprendizaje, historia, cultura, héroes y
+                        leyendas en una experiencia gamificada.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#comenzar"
+                            class="btn btn-primary btn-large"
+                        >
+                            Comenzar gratis
+                            <span>→</span>
+                        </a>
+
+
+                        <a
+                            href="#aprendizaje"
+                            class="btn btn-ghost btn-large"
+                        >
+                            Cómo funciona
+                        </a>
+
+                    </div>
+
+
+                    <div class="hero-pills">
+
+                        <span class="pill pill-magenta">
+                            🎮 Gamificado
+                        </span>
+
+                        <span class="pill pill-cyan">
+                            🌎 Cultural
+                        </span>
+
+                        <span class="pill pill-leaf">
+                            📚 Educativo
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HERO VISUAL -->
+
+                <div class="hero-visual reveal">
+
+                    <div class="floating-star star-1">✦</div>
+                    <div class="floating-star star-2">✷</div>
+                    <div class="floating-star star-3">✦</div>
+
+
+                    <div class="medallion">
+
+                        <div class="medallion-ring"></div>
+
+                        <img
+                            src="coco-hero.jpg"
+                            alt="Coco, personaje de NicaLingo"
+                            class="mascot-img"
+                        >
+
+                    </div>
+
+
+                    <div class="float-chip chip-life">
+                        ❤️ Cultura viva
+                    </div>
+
+                    <div class="float-chip chip-streak">
+                        🔥 Racha activa
+                    </div>
+
+                    <div class="float-chip chip-coin">
+                        ✦ +50 XP
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DIVISOR -->
+
+            <div class="divider divider-zigzag-green"></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ECOSISTEMA
+        ================================================== -->
+
+        <section
+            class="section section-alt"
+            id="ecosistema"
         >
 
-          <div class="medallion">
+            <div class="wrap">
 
-            <img
-              src="coco-hero.jpg"
-              alt="Coco, personaje de NicaLingo"
-              class="mascot-img"
-            >
+                <div class="section-head reveal">
 
-          </div>
+                    <span class="eyebrow eyebrow-sun">
+                        Nuestro ecosistema
+                    </span>
 
+                    <h2>
+                        Mucho más que aprender palabras
+                    </h2>
 
-          <div class="float-chip chip-life">
-            ✦ Cultura
-          </div>
+                    <p class="section-lead">
+                        NicaLingo conecta idioma, cultura,
+                        historia y comunidad.
+                    </p>
 
-          <div class="float-chip chip-streak">
-            🔥 Aprende
-          </div>
-
-          <div class="float-chip chip-coin">
-            ★ Identidad
-          </div>
-
-        </div>
-
-      </div>
+                </div>
 
 
-      <div class="divider divider-zigzag-green"></div>
-
-    </section>
+                <div class="card-grid card-grid-3">
 
 
-    <!-- ===================================================
-         ECOSISTEMA
-         =================================================== -->
-    <section
-      class="section section-alt"
-      id="ecosistema"
-    >
+                    <article
+                        class="card color-coral reveal"
+                        style="--delay:.05s"
+                    >
 
-      <div class="wrap">
+                        <div class="icon-badge">
+                            📖
+                        </div>
 
-        <div class="section-head reveal">
+                        <h3>
+                            Contenido histórico
+                        </h3>
 
-          <span class="eyebrow eyebrow-magenta">
-            Nuestro ecosistema
-          </span>
+                        <p>
+                            Descubre el contexto detrás de cada
+                            palabra, expresión y tradición.
+                        </p>
 
-          <h2>
-            Una experiencia que va más allá del idioma
-          </h2>
-
-          <p class="section-lead">
-            NicaLingo conecta aprendizaje lingüístico con
-            cultura, historia y comunidad.
-          </p>
-
-        </div>
+                    </article>
 
 
-        <div class="card-grid card-grid-3">
+                    <article
+                        class="card color-magenta reveal"
+                        style="--delay:.15s"
+                    >
 
-          <article class="card reveal">
+                        <div class="icon-badge">
+                            👥
+                        </div>
 
-            <div
-              class="icon-badge"
-              style="--bc:var(--magenta)"
-            >
-              📚
+                        <h3>
+                            Comunidad digital
+                        </h3>
+
+                        <p>
+                            Aprende compartiendo experiencias,
+                            conocimientos y cultura.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="card color-cyan reveal"
+                        style="--delay:.25s"
+                    >
+
+                        <div class="icon-badge">
+                            🗺️
+                        </div>
+
+                        <h3>
+                            Turismo cultural
+                        </h3>
+
+                        <p>
+                            Conecta el aprendizaje lingüístico
+                            con los lugares y tradiciones de Nicaragua.
+                        </p>
+
+                    </article>
+
+                </div>
+
             </div>
 
-            <h3>
-              Contenido histórico
-            </h3>
+        </section>
 
-            <p>
-              Descubre historias, tradiciones y conocimientos
-              que forman parte de la identidad cultural
-              de Nicaragua.
-            </p>
 
-          </article>
 
+        <!-- =================================================
+             APRENDIZAJE
+        ================================================== -->
 
-          <article
-            class="card reveal"
-            style="--delay:.1s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--coral)"
-            >
-              🌎
-            </div>
-
-            <h3>
-              Comunidad digital
-            </h3>
-
-            <p>
-              Aprende junto a otras personas y comparte
-              experiencias relacionadas con nuestras lenguas
-              y culturas.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card reveal"
-            style="--delay:.2s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--leaf)"
-            >
-              🧭
-            </div>
-
-            <h3>
-              Turismo cultural
-            </h3>
-
-            <p>
-              Conoce Nicaragua desde sus lenguas,
-              territorios, tradiciones y expresiones culturales.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-
-      <div class="divider divider-wave-coral"></div>
-
-    </section>
-
-
-    <!-- ===================================================
-         APRENDIZAJE
-         =================================================== -->
-    <section
-      class="section"
-      id="aprendizaje"
-    >
-
-      <div class="wrap">
-
-        <div class="section-head reveal">
-
-          <span class="eyebrow eyebrow-sun">
-            Aprende jugando
-          </span>
-
-          <h2>
-            ¿Cómo aprenderás?
-          </h2>
-
-          <p class="section-lead">
-            Microaprendizaje y actividades interactivas
-            para practicar diferentes habilidades lingüísticas.
-          </p>
-
-        </div>
-
-
-        <div class="card-grid card-grid-4">
-
-          <article class="card card-compact reveal">
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--cyan)"
-            >
-              🎧
-            </div>
-
-            <h3>
-              Listening
-            </h3>
-
-            <p>
-              Entrena tu comprensión auditiva escuchando
-              palabras y expresiones.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card card-compact reveal"
-            style="--delay:.1s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--magenta)"
-            >
-              🎤
-            </div>
-
-            <h3>
-              Speaking
-            </h3>
-
-            <p>
-              Practica la pronunciación y aprende
-              a expresarte.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card card-compact reveal"
-            style="--delay:.2s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--coral)"
-            >
-              💬
-            </div>
-
-            <h3>
-              Grammar
-            </h3>
-
-            <p>
-              Comprende las estructuras del idioma
-              de forma sencilla.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card card-compact reveal"
-            style="--delay:.3s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--leaf)"
-            >
-              ✏️
-            </div>
-
-            <h3>
-              Writing
-            </h3>
-
-            <p>
-              Pon en práctica lo aprendido mediante
-              ejercicios escritos.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         DOCENTES
-         =================================================== -->
-    <section
-      class="section section-dark"
-      id="docentes"
-    >
-
-      <div class="wrap">
-
-        <div class="section-head reveal">
-
-          <span class="eyebrow eyebrow-ocean">
-            Para docentes
-          </span>
-
-          <h2>
-            Un portal educativo para acompañar el aprendizaje
-          </h2>
-
-          <p class="section-lead">
-            Herramientas y recursos para facilitar la enseñanza
-            y fortalecer el aprendizaje de las lenguas.
-          </p>
-
-        </div>
-
-
-        <div class="card-grid card-grid-2">
-
-          <article class="card card-dark reveal">
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--cyan)"
-            >
-              📝
-            </div>
-
-            <h3>
-              Generador de tests
-            </h3>
-
-            <p>
-              Crea actividades y evaluaciones para acompañar
-              el progreso de los estudiantes.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card card-dark reveal"
-            style="--delay:.15s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--purple)"
-            >
-              📖
-            </div>
-
-            <h3>
-              Biblioteca de recursos
-            </h3>
-
-            <p>
-              Accede a materiales educativos relacionados
-              con las lenguas y culturas de Nicaragua.
-            </p>
-
-          </article>
-
-        </div>
-
-
-        <div class="legal-strip reveal">
-
-          <span>
-            Ley No. 28
-          </span>
-
-          <span>
-            Protección de Lenguas
-          </span>
-
-          <span>
-            Eje N.º 4 · MINED
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="divider divider-wave-navy"></div>
-
-    </section>
-
-
-    <!-- ===================================================
-         EQUIPO / SINSKIRA
-         =================================================== -->
-    <section
-      class="section"
-      id="equipo"
-    >
-
-      <div class="wrap">
-
-        <div class="section-head reveal">
-
-          <span class="eyebrow eyebrow-leaf">
-            Sinskira
-          </span>
-
-          <h2>
-            Identidad que conecta generaciones
-          </h2>
-
-          <p class="section-lead">
-            NicaLingo nace para conectar la sabiduría ancestral
-            con las herramientas de aprendizaje del presente.
-          </p>
-
-        </div>
-
-
-        <div class="card-grid card-grid-3">
-
-          <article class="card reveal">
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--leaf)"
-            >
-              🌱
-            </div>
-
-            <h3>
-              Sinskira
-            </h3>
-
-            <p>
-              Representa el respeto por la sabiduría ancestral
-              y el conocimiento transmitido entre generaciones.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card reveal"
-            style="--delay:.1s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--coral)"
-            >
-              🇳🇮
-            </div>
-
-            <h3>
-              NicaLingo
-            </h3>
-
-            <p>
-              Une identidad nacional, cultura y aprendizaje
-              mediante una experiencia digital.
-            </p>
-
-          </article>
-
-
-          <article
-            class="card reveal"
-            style="--delay:.2s"
-          >
-
-            <div
-              class="icon-badge"
-              style="--bc:var(--sun)"
-            >
-              🦜
-            </div>
-
-            <h3>
-              Coco
-            </h3>
-
-            <p>
-              Nuestro personaje representa cultura, estudio,
-              curiosidad y conexión con la tierra.
-            </p>
-
-          </article>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         CTA FINAL
-         =================================================== -->
-    <section
-      class="cta-final"
-      id="comenzar"
-    >
-
-      <div class="wrap cta-inner reveal">
-
-        <img
-          src="coco-logo.png"
-          alt="Coco"
-          class="cta-mascot"
+        <section
+            class="section"
+            id="aprendizaje"
         >
 
-        <h2>
-          Únete a la revitalización lingüística de Nicaragua
-        </h2>
+            <div class="wrap">
 
-        <p class="section-lead">
-          Aprende, descubre y conecta con nuestra identidad.
-        </p>
+                <div class="section-head reveal">
 
-        <a
-          href="#inicio"
-          class="btn btn-primary btn-large"
+                    <span class="eyebrow eyebrow-leaf">
+                        Aprende jugando
+                    </span>
+
+                    <h2>
+                        Una experiencia que se adapta a ti
+                    </h2>
+
+                    <p class="section-lead">
+                        Practica diferentes habilidades mientras
+                        avanzas por el universo de NicaLingo.
+                    </p>
+
+                </div>
+
+
+                <div class="card-grid card-grid-4">
+
+
+                    <article
+                        class="skill-card skill-listening reveal"
+                        style="--delay:.05s"
+                    >
+
+                        <div class="skill-icon">
+                            🎧
+                        </div>
+
+                        <span class="skill-number">
+                            01
+                        </span>
+
+                        <h3>
+                            Listening
+                        </h3>
+
+                        <p>
+                            Entrena tu oído y reconoce palabras
+                            y expresiones.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card skill-speaking reveal"
+                        style="--delay:.15s"
+                    >
+
+                        <div class="skill-icon">
+                            🎤
+                        </div>
+
+                        <span class="skill-number">
+                            02
+                        </span>
+
+                        <h3>
+                            Speaking
+                        </h3>
+
+                        <p>
+                            Practica la pronunciación y
+                            comunicación.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card skill-grammar reveal"
+                        style="--delay:.25s"
+                    >
+
+                        <div class="skill-icon">
+                            💬
+                        </div>
+
+                        <span class="skill-number">
+                            03
+                        </span>
+
+                        <h3>
+                            Grammar
+                        </h3>
+
+                        <p>
+                            Comprende estructuras y formas
+                            de expresión.
+                        </p>
+
+                    </article>
+
+
+                    <article
+                        class="skill-card skill-writing reveal"
+                        style="--delay:.35s"
+                    >
+
+                        <div class="skill-icon">
+                            ✏️
+                        </div>
+
+                        <span class="skill-number">
+                            04
+                        </span>
+
+                        <h3>
+                            Writing
+                        </h3>
+
+                        <p>
+                            Aprende a expresarte de manera
+                            escrita.
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <div class="progress-demo reveal">
+
+                    <div>
+                        <strong>
+                            Tu progreso
+                        </strong>
+
+                        <span>
+                            Nivel cultural · 72%
+                        </span>
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div class="progress-fill"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DOCENTES
+        ================================================== -->
+
+        <section
+            class="section section-dark"
+            id="docentes"
         >
-          Comenzar ahora →
-        </a>
 
-      </div>
-
-    </section>
-
-  </main>
+            <div class="dark-decoration dark-decoration-1"></div>
+            <div class="dark-decoration dark-decoration-2"></div>
 
 
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
-  <footer class="site-footer">
+            <div class="wrap">
 
-    <div class="wrap">
+                <div class="section-head reveal">
 
-      <div class="footer-inner">
+                    <span class="eyebrow eyebrow-magenta">
+                        Para docentes
+                    </span>
 
-        <div class="footer-brand">
+                    <h2>
+                        Un portal para enseñar,
+                        crear y compartir
+                    </h2>
 
-          <img
-            src="coco-logo.png"
-            alt="NicaLingo"
-            class="brand-mark"
-          >
+                    <p class="section-lead">
+                        Herramientas educativas para acompañar
+                        el aprendizaje de las lenguas y culturas
+                        de Nicaragua.
+                    </p>
 
-          <strong>
-            NicaLingo
-          </strong>
+                </div>
 
-          <p>
-            Cultura · Tecnología · Identidad
-          </p>
+
+                <div class="card-grid card-grid-2">
+
+
+                    <article class="dark-card reveal">
+
+                        <div class="dark-card-icon">
+                            📝
+                        </div>
+
+                        <h3>
+                            Generador de tests
+                        </h3>
+
+                        <p>
+                            Crea actividades y evaluaciones
+                            para reforzar el aprendizaje.
+                        </p>
+
+                    </article>
+
+
+                    <article class="dark-card reveal">
+
+                        <div class="dark-card-icon">
+                            📚
+                        </div>
+
+                        <h3>
+                            Biblioteca de recursos
+                        </h3>
+
+                        <p>
+                            Accede a materiales organizados
+                            para utilizar dentro y fuera del aula.
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <div class="legal-strip reveal">
+
+                    <span>
+                        Ley No. 28
+                    </span>
+
+                    <span>
+                        Protección de Lenguas
+                    </span>
+
+                    <span>
+                        Eje N.º 4 · MINED
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="divider divider-wave-coral"></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EQUIPO
+        ================================================== -->
+
+        <section
+            class="section"
+            id="equipo"
+        >
+
+            <div class="wrap">
+
+                <div class="section-head reveal">
+
+                    <span class="eyebrow eyebrow-ocean">
+                        Identidad
+                    </span>
+
+                    <h2>
+                        Una historia que también se aprende
+                    </h2>
+
+                </div>
+
+
+                <div class="identity-grid">
+
+
+                    <div class="identity-character reveal">
+
+                        <div class="identity-circle">
+                            <img
+                                src="coco-logo.png"
+                                alt="Coco"
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="identity-text reveal">
+
+                        <div class="identity-item">
+
+                            <span class="identity-dot dot-coral">
+                                01
+                            </span>
+
+                            <div>
+
+                                <h3>
+                                    Sinskira
+                                </h3>
+
+                                <p>
+                                    Representa respeto por la
+                                    sabiduría ancestral y las raíces.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="identity-item">
+
+                            <span class="identity-dot dot-leaf">
+                                02
+                            </span>
+
+                            <div>
+
+                                <h3>
+                                    NicaLingo
+                                </h3>
+
+                                <p>
+                                    Une identidad nacional con
+                                    aprendizaje moderno y accesible.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="identity-item">
+
+                            <span class="identity-dot dot-sun">
+                                03
+                            </span>
+
+                            <div>
+
+                                <h3>
+                                    Coco
+                                </h3>
+
+                                <p>
+                                    Simboliza cultura, estudio,
+                                    curiosidad y conexión con la tierra.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CTA
+        ================================================== -->
+
+        <section
+            class="cta-final"
+            id="comenzar"
+        >
+
+            <div class="cta-decoration cta-decoration-1">
+                ✦
+            </div>
+
+            <div class="cta-decoration cta-decoration-2">
+                ✷
+            </div>
+
+
+            <div class="cta-inner reveal">
+
+                <img
+                    src="coco-logo.png"
+                    alt="Coco"
+                    class="cta-mascot"
+                >
+
+
+                <span class="eyebrow eyebrow-sun">
+                    El siguiente paso empieza aquí
+                </span>
+
+
+                <h2>
+                    Únete a la revitalización
+                    lingüística de Nicaragua
+                </h2>
+
+
+                <p>
+                    Aprende, descubre y conecta con la
+                    identidad de Nicaragua.
+                </p>
+
+
+                <a
+                    href="#inicio"
+                    class="btn btn-primary btn-large"
+                >
+                    Comenzar ahora
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="wrap footer-inner">
+
+
+            <div class="footer-brand">
+
+                <img
+                    src="coco-logo.png"
+                    alt="NicaLingo"
+                    class="brand-mark"
+                >
+
+                <h3>
+                    NicaLingo
+                </h3>
+
+                <p>
+                    Cultura, identidad y aprendizaje
+                    en una experiencia digital.
+                </p>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    Explora
+                </h4>
+
+                <a href="#ecosistema">
+                    Ecosistema
+                </a>
+
+                <a href="#aprendizaje">
+                    Aprendizaje
+                </a>
+
+                <a href="#docentes">
+                    Docentes
+                </a>
+
+            </div>
+
+
+            <div class="footer-col">
+
+                <h4>
+                    NicaLingo
+                </h4>
+
+                <a href="#equipo">
+                    Quiénes somos
+                </a>
+
+                <a href="#comenzar">
+                    Comenzar
+                </a>
+
+            </div>
 
         </div>
 
 
-        <div class="footer-col">
+        <div class="footer-bottom">
 
-          <h4>
-            NicaLingo
-          </h4>
+            <span>
+                © <span id="year"></span> NicaLingo
+            </span>
 
-          <a href="#ecosistema">
-            Ecosistema
-          </a>
-
-          <a href="#aprendizaje">
-            Aprendizaje
-          </a>
-
-          <a href="#docentes">
-            Docentes
-          </a>
+            <span>
+                Equipo Sinskira
+            </span>
 
         </div>
 
-
-        <div class="footer-col">
-
-          <h4>
-            Proyecto
-          </h4>
-
-          <a href="#equipo">
-            Equipo Sinskira
-          </a>
-
-          <a href="#comenzar">
-            Comenzar
-          </a>
-
-        </div>
-
-      </div>
+    </footer>
 
 
-      <div class="footer-bottom">
-
-        <span>
-          © <span id="year"></span> NicaLingo
-        </span>
-
-        <span>
-          Equipo Sinskira
-        </span>
-
-      </div>
-
-    </div>
-
-  </footer>
-
-
-  <!-- JavaScript -->
-  <script src="script.js"></script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 
 </body>
-
 </html>
-```
-
