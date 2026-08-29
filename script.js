@@ -1,7 +1,7 @@
-```javascript
 // ==========================================================
-// NicaLingo — SCRIPT.JS
-// Interactividad y animaciones
+// NicaLingo
+// SCRIPT.JS
+// Interactividad, animaciones y navegación
 // ==========================================================
 
 
@@ -9,13 +9,154 @@
    AÑO DEL FOOTER
    ========================================================== */
 
-const yearElement =
-  document.getElementById('year');
+const year = document.getElementById("year");
 
-if(yearElement){
+if (year) {
+    year.textContent = new Date().getFullYear();
+}
 
-  yearElement.textContent =
-    new Date().getFullYear();
+
+/* ==========================================================
+   HEADER AL HACER SCROLL
+   ========================================================== */
+
+const siteHeader = document.getElementById("siteHeader");
+
+function updateHeader() {
+
+    if (!siteHeader) return;
+
+    if (window.scrollY > 30) {
+
+        siteHeader.classList.add("is-scrolled");
+
+    } else {
+
+        siteHeader.classList.remove("is-scrolled");
+
+    }
+}
+
+window.addEventListener(
+    "scroll",
+    updateHeader,
+    { passive: true }
+);
+
+updateHeader();
+
+
+/* ==========================================================
+   MENÚ MOBILE
+   ========================================================== */
+
+const navToggle = document.getElementById("navToggle");
+const mainNav = document.getElementById("mainNav");
+
+
+if (navToggle && mainNav) {
+
+    navToggle.addEventListener("click", () => {
+
+        const isOpen =
+            mainNav.classList.toggle("is-open");
+
+        navToggle.classList.toggle(
+            "active",
+            isOpen
+        );
+
+        navToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+    });
+
+
+    /* Cerrar menú cuando se selecciona un enlace */
+
+    const navLinks =
+        mainNav.querySelectorAll("a");
+
+    navLinks.forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            mainNav.classList.remove("is-open");
+
+            navToggle.classList.remove("active");
+
+            navToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        });
+
+    });
+
+}
+
+
+/* ==========================================================
+   SCROLL REVEAL
+   ========================================================== */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+if ("IntersectionObserver" in window) {
+
+    const revealObserver =
+        new IntersectionObserver(
+
+            (entries, observer) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "is-visible"
+                        );
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold:0.12,
+
+                rootMargin:
+                    "0px 0px -50px 0px"
+            }
+
+        );
+
+
+    revealElements.forEach(element => {
+
+        revealObserver.observe(element);
+
+    });
+
+} else {
+
+    revealElements.forEach(element => {
+
+        element.classList.add(
+            "is-visible"
+        );
+
+    });
 
 }
 
@@ -26,347 +167,284 @@ if(yearElement){
 
 (function cursorGlow(){
 
-  const glow =
-    document.getElementById('cursorGlow');
+    const glow =
+        document.getElementById("cursorGlow");
 
-  if(!glow) return;
-
-
-  // No ejecutar el efecto en dispositivos táctiles
-  if(
-    window.matchMedia('(pointer: coarse)').matches
-  ){
-    return;
-  }
+    if (!glow) return;
 
 
-  let targetX =
-    window.innerWidth / 2;
+    /* No ejecutar en dispositivos táctiles */
 
-  let targetY =
-    window.innerHeight / 2;
-
-  let x = targetX;
-  let y = targetY;
-
-  let active = false;
-
-
-  window.addEventListener(
-    'mousemove',
-    function(event){
-
-      targetX = event.clientX;
-      targetY = event.clientY;
-
-
-      if(!active){
-
-        active = true;
-
-        glow.classList.add(
-          'is-active'
-        );
-
-      }
-
-    },
-    {
-      passive:true
+    if (
+        window.matchMedia(
+            "(pointer: coarse)"
+        ).matches
+    ) {
+        return;
     }
-  );
 
 
-  document.addEventListener(
-    'mouseleave',
-    function(){
+    let targetX =
+        window.innerWidth / 2;
 
-      active = false;
+    let targetY =
+        window.innerHeight / 2;
 
-      glow.classList.remove(
-        'is-active'
-      );
-
-    }
-  );
+    let currentX = targetX;
+    let currentY = targetY;
 
 
-  function animate(){
+    window.addEventListener(
+        "mousemove",
+        event => {
 
-    x +=
-      (targetX - x) * 0.12;
+            targetX =
+                event.clientX;
 
-    y +=
-      (targetY - y) * 0.12;
+            targetY =
+                event.clientY;
 
+            glow.classList.add(
+                "is-active"
+            );
 
-    glow.style.transform =
-      `translate(${x}px, ${y}px)`;
-
-
-    requestAnimationFrame(
-      animate
+        },
+        { passive:true }
     );
 
-  }
+
+    window.addEventListener(
+        "mouseleave",
+        () => {
+
+            glow.classList.remove(
+                "is-active"
+            );
+
+        }
+    );
 
 
-  animate();
+    function animateGlow(){
+
+        currentX +=
+            (targetX - currentX) * 0.12;
+
+        currentY +=
+            (targetY - currentY) * 0.12;
+
+
+        glow.style.transform =
+            `translate(${currentX}px, ${currentY}px)`;
+
+
+        requestAnimationFrame(
+            animateGlow
+        );
+    }
+
+
+    animateGlow();
 
 })();
 
 
 /* ==========================================================
-   HEADER AL HACER SCROLL
+   ANIMACIÓN DE TARJETAS AL PASAR EL MOUSE
    ========================================================== */
 
-(function headerScroll(){
-
-  const header =
-    document.getElementById(
-      'siteHeader'
-    );
-
-  if(!header) return;
-
-
-  function updateHeader(){
-
-    header.classList.toggle(
-      'is-scrolled',
-      window.scrollY > 12
-    );
-
-  }
-
-
-  window.addEventListener(
-    'scroll',
-    updateHeader,
-    {
-      passive:true
-    }
-  );
-
-
-  updateHeader();
-
-})();
-
-
-/* ==========================================================
-   MENÚ MÓVIL
-   ========================================================== */
-
-(function mobileNav(){
-
-  const toggle =
-    document.getElementById(
-      'navToggle'
-    );
-
-  const nav =
-    document.getElementById(
-      'mainNav'
-    );
-
-
-  if(!toggle || !nav) return;
-
-
-  toggle.addEventListener(
-    'click',
-    function(){
-
-      const isOpen =
-        nav.classList.toggle(
-          'is-open'
-        );
-
-
-      toggle.classList.toggle(
-        'is-active',
-        isOpen
-      );
-
-
-      toggle.setAttribute(
-        'aria-expanded',
-        String(isOpen)
-      );
-
-    }
-  );
-
-
-  /*
-   * Al seleccionar un enlace:
-   * cerramos automáticamente
-   * el menú móvil.
-   */
-
-  nav.querySelectorAll('a')
-    .forEach(
-      function(link){
-
-        link.addEventListener(
-          'click',
-          function(){
-
-            nav.classList.remove(
-              'is-open'
-            );
-
-            toggle.classList.remove(
-              'is-active'
-            );
-
-            toggle.setAttribute(
-              'aria-expanded',
-              'false'
-            );
-
-          }
-        );
-
-      }
-    );
-
-})();
-
-
-/* ==========================================================
-   SCROLL REVEAL
-   ========================================================== */
-
-(function scrollReveal(){
-
-  const elements =
+const cards =
     document.querySelectorAll(
-      '.reveal'
+        ".card, .skill-card, .dark-card"
     );
 
 
-  if(!elements.length) return;
+cards.forEach(card => {
 
+    card.addEventListener(
+        "mouseenter",
+        () => {
 
-  /*
-   * Compatibilidad con navegadores
-   * que no soporten IntersectionObserver.
-   */
+            card.style.zIndex = "5";
 
-  if(
-    !('IntersectionObserver' in window)
-  ){
-
-    elements.forEach(
-      function(element){
-
-        element.classList.add(
-          'is-visible'
-        );
-
-      }
+        }
     );
 
-    return;
 
-  }
+    card.addEventListener(
+        "mouseleave",
+        () => {
 
+            card.style.zIndex = "";
 
-  const observer =
-    new IntersectionObserver(
-      function(entries){
+        }
+    );
 
-        entries.forEach(
-          function(entry){
-
-            if(
-              entry.isIntersecting
-            ){
-
-              entry.target.classList.add(
-                'is-visible'
-              );
+});
 
 
-              observer.unobserve(
-                entry.target
-              );
+/* ==========================================================
+   EFECTO SUAVE EN EL MEDALLÓN DE COCO
+   ========================================================== */
 
+const medallion =
+    document.querySelector(".medallion");
+
+
+if (medallion) {
+
+    medallion.addEventListener(
+        "mousemove",
+        event => {
+
+            const rect =
+                medallion.getBoundingClientRect();
+
+            const centerX =
+                rect.left + rect.width / 2;
+
+            const centerY =
+                rect.top + rect.height / 2;
+
+            const rotateX =
+                (event.clientY - centerY) / 35;
+
+            const rotateY =
+                (event.clientX - centerX) / 35;
+
+
+            medallion.style.transform =
+                `perspective(700px)
+                 rotateX(${-rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-8px)`;
+
+        }
+    );
+
+
+    medallion.addEventListener(
+        "mouseleave",
+        () => {
+
+            medallion.style.transform = "";
+
+        }
+    );
+
+}
+
+
+/* ==========================================================
+   SMOOTH SCROLL PARA ENLACES INTERNOS
+   ========================================================== */
+
+const internalLinks =
+    document.querySelectorAll(
+        'a[href^="#"]'
+    );
+
+
+internalLinks.forEach(link => {
+
+    link.addEventListener(
+        "click",
+        event => {
+
+            const targetId =
+                link.getAttribute("href");
+
+            if (
+                !targetId ||
+                targetId === "#"
+            ) {
+                return;
             }
 
-          }
-        );
 
-      },
-      {
-        threshold:0.15,
+            const target =
+                document.querySelector(
+                    targetId
+                );
 
-        rootMargin:
-          '0px 0px -60px 0px'
-      }
+
+            if (!target) return;
+
+
+            event.preventDefault();
+
+
+            const headerHeight =
+                siteHeader
+                    ? siteHeader.offsetHeight
+                    : 0;
+
+
+            const targetPosition =
+                target.getBoundingClientRect().top
+                +
+                window.scrollY
+                -
+                headerHeight
+                -
+                10;
+
+
+            window.scrollTo({
+
+                top:targetPosition,
+
+                behavior:"smooth"
+
+            });
+
+        }
     );
 
-
-  elements.forEach(
-    function(element){
-
-      observer.observe(
-        element
-      );
-
-    }
-  );
-
-})();
+});
 
 
 /* ==========================================================
-   CERRAR MENÚ AL PASAR A ESCRITORIO
+   EFECTO DE ENTRADA DE LA BARRA DE PROGRESO
    ========================================================== */
 
-window.addEventListener(
-  'resize',
-  function(){
+const progressBar =
+    document.querySelector(
+        ".progress-fill"
+    );
 
-    if(window.innerWidth > 720){
 
-      const nav =
-        document.getElementById(
-          'mainNav'
+if (progressBar) {
+
+    const progressObserver =
+        new IntersectionObserver(
+
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        progressBar.style.animation =
+                            "progressGrow 1.8s cubic-bezier(.2,.8,.2,1) both";
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold:.5
+            }
+
         );
 
-      const toggle =
-        document.getElementById(
-          'navToggle'
-        );
 
+    progressObserver.observe(
+        progressBar
+    );
 
-      if(nav){
-
-        nav.classList.remove(
-          'is-open'
-        );
-
-      }
-
-
-      if(toggle){
-
-        toggle.classList.remove(
-          'is-active'
-        );
-
-        toggle.setAttribute(
-          'aria-expanded',
-          'false'
-        );
-
-      }
-
-    }
-
-  }
-);
-```
+}
