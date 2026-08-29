@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NicaLingo — Aprende. Conecta. Pertenece.</title>
+<meta
+name="description"
+content="NicaLingo es una plataforma educativa para aprender y
+revitalizar las lenguas indígenas de Nicaragua."
+>
+<!--
+Preconnect + link en vez de @import dentro del CSS:
+@import bloquea el primer render mientras el navegador
+resuelve esa petición aparte. Esto carga la fuente de
+respaldo (mientras subís tus archivos reales de Bernoru
+y Basma a /fonts/, ver styles.css).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- =========================================================
+CURSOR / EFECTOS
+========================================================== -->
+<div class="cursor-glow"></div>
+<div class="noise"></div>
+<!-- =========================================================
+LOADER
+========================================================== -->
+<div class="loader" id="loader">
+<div class="loader-coco">
+🥥
+</div>
+<div class="loader-title">
+Nica<span>Lingo</span>
+</div>
+<div class="loader-line">
+<div></div>
+</div>
+<p>Preparando tu viaje...</p>
+</div>
+<!-- =========================================================
+NAVBAR
+========================================================== -->
+<header class="navbar" id="navbar">
+<a href="#inicio" class="nav-logo">
+<img src="nicalingo-logo.png" alt="NicaLingo" width="120" height="33">
+</a>
+<nav class="nav-links">
+<a href="#aprende">Aprende</a>
+<a href="#ecosistema">Ecosistema</a>
+<a href="#cultura">Cultura</a>
+<a href="#equipo">Sinskira</a>
+</nav>
+<a href="#comenzar" class="nav-button magnetic">
+<span>Comenzar</span>
+<span class="arrow">↗</span>
+</a>
+<button class="menu-button" id="menuButton">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
+<!-- =========================================================
+MOBILE MENU
+========================================================== -->
+<div class="mobile-menu" id="mobileMenu">
+<a href="#aprende">Aprende</a>
+<a href="#ecosistema">Ecosistema</a>
+<a href="#cultura">Cultura</a>
+<a href="#equipo">Sinskira</a>
+<a href="#comenzar" class="mobile-start">
+Comenzar →
+</a>
+</div>
+<!-- =========================================================
+HERO
+========================================================== -->
+<main>
+<section class="hero" id="inicio">
+<!-- blobs -->
+<div class="hero-blob blob-one"></div>
+<div class="hero-blob blob-two"></div>
+<div class="hero-blob blob-three"></div>
+<!-- decoraciones -->
+<div class="floating-symbol symbol-one">✦</div>
+<div class="floating-symbol symbol-two">✷</div>
+<div class="floating-symbol symbol-three">✦</div>
+<div class="hero-content">
+<div class="hero-kicker reveal">
+<span class="kicker-dot"></span>
+Cultura · Tecnología · Identidad
+</div>
+<h1 class="hero-title">
+<span class="line-mask">
+<span>Tu idioma.</span>
+</span>
+<span class="line-mask">
+<span class="yellow-text">Tus raíces.</span>
+</span>
+<span class="line-mask">
+<span>Tu historia.</span>
+</span>
+</h1>
+<p class="hero-description reveal">
+Una nueva forma de aprender las lenguas indígenas
+de Nicaragua mientras descubrís las historias,
+tradiciones y raíces que nos conectan.
+</p>
+<div class="hero-actions reveal">
+<a href="#comenzar" class="primary-button magnetic">
+<span class="button-fill"></span>
+<span class="button-content">
+Explorar NicaLingo
+<strong>↗</strong>
+</span>
+</a>
+<a href="#aprende" class="secondary-button">
+<span class="play-icon">▶</span>
+Descubrir cómo funciona
+</a>
+</div>
+<div class="hero-note reveal">
+<span>✦</span>
+Diseñado para aprender jugando.
+</div>
+</div>
+<!-- =====================================================
+HERO VISUAL
+====================================================== -->
+<div class="hero-visual">
+<div class="orbit orbit-one"></div>
+<div class="orbit orbit-two"></div>
+<div class="hero-card-back"></div>
+<div class="hero-card">
+<div class="card-top">
+<span class="mini-label">
+TU PROGRESO
+</span>
+<span class="streak">
+🔥 12
+</span>
+</div>
+<div class="coco-container">
+<div class="coco-ring"></div>
+<div class="coco-shadow"></div>
+<div class="coco">
+🥥
+</div>
+<div class="coco-spark spark-a">✦</div>
+<div class="coco-spark spark-b">✦</div>
+</div>
+<div class="lesson-info">
+<span class="lesson-tag">
+LECCIÓN 08
+</span>
+<h3>
+Saludos y presentación
+</h3>
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+<div class="lesson-bottom">
+<span>68% completado</span>
+<span>+25 XP</span>
+</div>
+</div>
+</div>
+<!-- floating mini cards -->
+<div class="floating-card floating-card-one">
+<span>🔥</span>
+<div>
+<small>Racha</small>
+<strong>12 días</strong>
+</div>
+</div>
+<div class="floating-card floating-card-two">
+<span>⭐</span>
+<div>
+<small>Experiencia</small>
+<strong>1,840 XP</strong>
+</div>
+</div>
+<div class="floating-card floating-card-three">
+<span>🪙</span>
+<div>
+<small>Monedas</small>
+<strong>540</strong>
+</div>
+</div>
+</div>
+<div class="scroll-indicator">
+<span>SCROLL PARA DESCUBRIR</span>
+<div class="scroll-line">
+<div></div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+MARQUEE
+========================================================== -->
+<section class="marquee-section">
+<div class="marquee">
+<div class="marquee-content">
+<span>APRENDER</span>
+<i>✦</i>
+<span>CULTURA</span>
+<i>✦</i>
+<span>IDENTIDAD</span>
+<i>✦</i>
+<span>HISTORIA</span>
+<i>✦</i>
+<span>NICARAGUA</span>
+<i>✦</i>
+<span>APRENDER</span>
+<i>✦</i>
+<span>CULTURA</span>
+<i>✦</i>
+<span>IDENTIDAD</span>
+<i>✦</i>
+<span>HISTORIA</span>
+<i>✦</i>
+<span>NICARAGUA</span>
+<i>✦</i>
+</div>
+</div>
+</section>
+<!-- =========================================================
+INTRO
+========================================================== -->
+<section class="intro section-padding">
+<div class="section-number">
+01 / PROPÓSITO
+</div>
+<div class="intro-grid">
+<div class="intro-title reveal">
+<p class="eyebrow">
+MÁS QUE UNA APP
+</p>
+<h2>
+Aprender una lengua
+también es
+<span>reconectar.</span>
+</h2>
+</div>
+<div class="intro-text reveal">
+<p class="large-text">
+NicaLingo nace para revitalizar y enseñar
+las lenguas indígenas de Nicaragua mediante
+una experiencia educativa moderna,
+interactiva y profundamente nuestra.
+</p>
+<p>
+Combinamos microaprendizaje, gamificación,
+historia y cultura para transformar la manera
+en que nos acercamos a nuestras raíces.
+</p>
+<a href="#ecosistema" class="text-link">
+Conocer el ecosistema
+<span>→</span>
+</a>
+</div>
+</div>
+</section>
+<!-- =========================================================
+APRENDIZAJE
+========================================================== -->
+<section class="learning-section section-padding" id="aprende">
+<div class="section-header reveal">
+<div>
+<p class="eyebrow">
+02 / APRENDIZAJE
+</p>
+<h2>
+Aprendé a
+<span>tu manera.</span>
+</h2>
+</div>
+<p>
+Cuatro caminos para convertir cada lección
+en una experiencia.
+</p>
+</div>
+<div class="learning-grid">
+<!-- LISTENING -->
+<article class="learning-card card-yellow reveal">
+<div class="card-number">01</div>
+<div class="card-icon">
+◉
+</div>
+<p>LISTENING</p>
+<h3>
+Escuchá.
+Reconocé.
+</h3>
+<div class="sound-wave">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div class="card-arrow">↗</div>
+</article>
+<!-- SPEAKING -->
+<article class="learning-card card-blue reveal">
+<div class="card-number">02</div>
+<div class="mic-animation">
+<div class="mic-circle">
+🎙
+</div>
+<div class="mic-wave"></div>
+</div>
+<p>SPEAKING</p>
+<h3>
+Tu voz
+también cuenta.
+</h3>
+<div class="card-arrow">↗</div>
+</article>
+<!-- GRAMMAR -->
+<article class="learning-card card-brown reveal">
+<div class="card-number">03</div>
+<div class="bubble-container">
+<span>Yo</span>
+<span>aprendo</span>
+<span>mi</span>
+<span>lengua</span>
+</div>
+<p>GRAMMAR</p>
+<h3>
+Construí
+el significado.
+</h3>
+<div class="card-arrow">↗</div>
+</article>
+<!-- WRITING -->
+<article class="learning-card card-gold reveal">
+<div class="card-number">04</div>
+<div class="writing-animation">
+NicaLingo<span>|</span>
+</div>
+<p>WRITING</p>
+<h3>
+Escribí.
+Expresate.
+</h3>
+<div class="card-arrow">↗</div>
+</article>
+</div>
+</section>
+<!-- =========================================================
+LEVEL MAP
+========================================================== -->
+<section class="map-section section-padding">
+<div class="map-background-text">
+APRENDÉ
+</div>
+<div class="map-content">
+<div class="map-copy reveal">
+<p class="eyebrow">
+TU CAMINO
+</p>
+<h2>
+Cada nivel
+<span>cuenta una historia.</span>
+</h2>
+<p>
+Avanzá desde tus primeros pasos hasta
+niveles más avanzados mientras acumulás
+experiencia, rachas y nuevas habilidades.
+</p>
+<a href="#comenzar" class="outline-button magnetic">
+Empezar mi recorrido
+<span>→</span>
+</a>
+</div>
+<div class="level-map reveal">
+<div class="map-path"></div>
+<div class="level-node node-1 active">
+<span>A1</span>
+<small>Primeros pasos</small>
+</div>
+<div class="level-node node-2">
+<span>A2</span>
+<small>Conversación</small>
+</div>
+<div class="level-node node-3">
+<span>B1</span>
+<small>Comprensión</small>
+</div>
+<div class="level-node node-4">
+<span>B2</span>
+<small>Dominio</small>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+ECOSISTEMA
+========================================================== -->
+<section class="ecosystem section-padding" id="ecosistema">
+<div class="section-number">
+03 / ECOSISTEMA DE IDENTIDAD
+</div>
+<div class="ecosystem-heading reveal">
+<p class="eyebrow">
+NO SOLO APRENDÉS PALABRAS
+</p>
+<h2>
+Entrás a un
+<span>mundo.</span>
+</h2>
+</div>
+<div class="ecosystem-grid">
+<article class="eco-card history reveal">
+<div class="eco-number">01</div>
+<div class="eco-visual">
+<span>✦</span>
+<div class="visual-lines"></div>
+</div>
+<div class="eco-content">
+<p>HISTORIAS</p>
+<h3>
+Nuestra memoria
+también enseña.
+</h3>
+<span class="eco-link">
+Explorar historias →
+</span>
+</div>
+</article>
+<article class="eco-card community reveal">
+<div class="eco-number">02</div>
+<div class="community-post">
+<div class="post-avatar">
+🥥
+</div>
+<div class="post-lines">
+<span></span>
+<span></span>
+</div>
+<div class="post-reaction">
+❤️ 128
+</div>
+</div>
+<div class="eco-content">
+<p>COMUNIDAD</p>
+<h3>
+Aprendemos
+juntos.
+</h3>
+<span class="eco-link">
+Conocer comunidad →
+</span>
+</div>
+</article>
+<article class="eco-card tourism reveal">
+<div class="eco-number">03</div>
+<div class="tourism-visual">
+<span class="mountain mountain-a"></span>
+<span class="mountain mountain-b"></span>
+<span class="sun"></span>
+</div>
+<div class="eco-content">
+<p>TURISMO CULTURAL</p>
+<h3>
+Descubrí Nicaragua
+desde su lengua.
+</h3>
+<span class="eco-link">
+Descubrir lugares →
+</span>
+</div>
+</article>
+</div>
+</section>
+<!-- =========================================================
+COCO
+========================================================== -->
+<section class="coco-section">
+<div class="coco-big-bg">
+COCO
+</div>
+<div class="coco-stage">
+<div class="coco-copy reveal">
+<p class="eyebrow">
+TU GUÍA EN EL VIAJE
+</p>
+<h2>
+Conocé a
+<span>Coco.</span>
+</h2>
+<p>
+Tu compañero de aprendizaje. Un personaje
+inspirado en la calidez de nuestras costas,
+con la curiosidad de quien nunca deja de aprender.
+</p>
+<div class="coco-features">
+<div>
+<span>🎩</span>
+<strong>Sombrero</strong>
+<small>Trabajo y tradición</small>
+</div>
+<div>
+<span>👓</span>
+<strong>Lentes</strong>
+<small>Sabiduría y estudio</small>
+</div>
+<div>
+<span>🌿</span>
+<strong>Hoja</strong>
+<small>Vida y naturaleza</small>
+</div>
+</div>
+</div>
+<div class="giant-coco reveal">
+<div class="coco-aura"></div>
+<div class="coco-face">
+<div class="coco-hat">🎩</div>
+<div class="coco-glasses">
+👓
+</div>
+<div class="coco-body">
+🥥
+</div>
+</div>
+<div class="coco-orbit-text">
+APRENDER · JUGAR · CONECTAR ·
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+TEACHERS
+========================================================== -->
+<section class="teacher-section section-padding">
+<div class="teacher-card reveal">
+<div class="teacher-copy">
+<p class="eyebrow">
+PARA DOCENTES
+</p>
+<h2>
+Llevá NicaLingo
+<span>al aula.</span>
+</h2>
+<p>
+Herramientas para crear evaluaciones,
+acceder a recursos educativos y acompañar
+el progreso de tus estudiantes.
+</p>
+<a href="#comenzar" class="primary-button dark magnetic">
+<span class="button-fill"></span>
+<span class="button-content">
+Conocer portal docente
+<strong>↗</strong>
+</span>
+</a>
+</div>
+<div class="teacher-ui">
+<div class="dashboard-window">
+<div class="window-top">
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div class="dashboard-content">
+<div class="dashboard-title">
+Mi clase
+</div>
+<div class="dashboard-stat">
+<div>
+<small>ESTUDIANTES</small>
+<strong>28</strong>
+</div>
+<div>
+<small>PROGRESO</small>
+<strong>74%</strong>
+</div>
+</div>
+<div class="dashboard-bars">
+<span style="--height:70%"></span>
+<span style="--height:48%"></span>
+<span style="--height:85%"></span>
+<span style="--height:62%"></span>
+<span style="--height:92%"></span>
+<span style="--height:76%"></span>
+</div>
+<div class="dashboard-button">
++ Crear evaluación
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+SINSKIRA
+========================================================== -->
+<section class="sinskira-section section-padding" id="equipo">
+<div class="section-number">
+04 / SINSKIRA
+</div>
+<div class="sinskira-grid">
+<div class="sinskira-word reveal">
+<div class="giant-word">
+SINSKIRA
+</div>
+<div class="word-decoration">
+✦
+</div>
+</div>
+<div class="sinskira-copy reveal">
+<p class="eyebrow">
+NUESTRO EQUIPO
+</p>
+<h2>
+Un nombre.
+<span>Un valor.</span>
+</h2>
+<p>
+Sinskira representa el acto de mostrar respeto,
+una inclinación ante la sabiduría de nuestros
+ancestros y el reconocimiento del otro.
+</p>
+<p>
+Elegimos este nombre porque queremos que cada
+parte de NicaLingo honre el legado oral de
+nuestros pueblos indígenas.
+</p>
+<div class="respect-symbol">
+<span>↘</span>
+<strong>Respeto por nuestras raíces.</strong>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================
+FREEMIUM
+========================================================== -->
+<section class="freemium section-padding">
+<div class="freemium-inner reveal">
+<p class="eyebrow">
+ACCESO PARA TODOS
+</p>
+<h2>
+Tus raíces
+<span>no tienen precio.</span>
+</h2>
+<p>
+Nuestro modelo Freemium mantiene disponible
+el contenido básico y las lecciones escolares
+para maximizar el impacto educativo y cultural.
+</p>
+<div class="freemium-pill">
+<span>✦</span>
+Contenido básico gratuito
+<span>✦</span>
+</div>
+</div>
+</section>
+<!-- =========================================================
+CTA
+========================================================== -->
+<section class="final-cta" id="comenzar">
+<div class="cta-rays"></div>
+<div class="cta-floating one">✦</div>
+<div class="cta-floating two">✷</div>
+<div class="cta-floating three">✦</div>
+<div class="cta-content reveal">
+<p class="eyebrow">
+TU VIAJE COMIENZA AQUÍ
+</p>
+<h2>
+Aprendé.
+<br>
+Jugá.
+<br>
+<span>Conectá.</span>
+</h2>
+<a href="#" class="cta-button magnetic">
+<span>
+Entrar a NicaLingo
+</span>
+<strong>↗</strong>
+</a>
+<p class="cta-small">
+Una lengua. Una historia. Una identidad.
+</p>
+</div>
+<div class="cta-logo">
+<img src="nicalingo-logo.png" alt="NicaLingo" width="130" height="36">
+</div>
+</section>
+</main>
+<!-- =========================================================
+FOOTER
+========================================================== -->
+<footer>
+<div class="footer-top">
+<img src="nicalingo-logo.png" alt="NicaLingo" width="130" height="36">
+<p>
+Tecnología para preservar,
+aprender y conectar.
+</p>
+</div>
+<div class="footer-bottom">
+<span>
+© 2026 NicaLingo · Sinskira
+</span>
+<span>
+Hecho con identidad nicaragüense ✦
+</span>
+</div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
