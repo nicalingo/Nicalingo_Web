@@ -414,21 +414,50 @@ if(year){
 
   document.querySelectorAll('.card').forEach(function(card){
 
-    card.addEventListener('mousemove', function(event){
+card.addEventListener('mousemove', function(event){
 
-      const rect = card.getBoundingClientRect();
+  const rect =
+    card.getBoundingClientRect();
 
-      const rotateX =
-        ((event.clientY - rect.top - rect.height / 2) / rect.height) * -5;
 
-      const rotateY =
-        ((event.clientX - rect.left - rect.width / 2) / rect.width) * 5;
+  /* Posición de la luz */
 
-      card.style.transform =
-        `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+  const x =
+    ((event.clientX - rect.left) / rect.width) * 100;
 
-    });
+  const y =
+    ((event.clientY - rect.top) / rect.height) * 100;
 
+
+  card.style.setProperty(
+    '--card-x',
+    `${x}%`
+  );
+
+  card.style.setProperty(
+    '--card-y',
+    `${y}%`
+  );
+
+
+  /* Movimiento 3D */
+
+  const rotateX =
+    ((event.clientY - rect.top - rect.height / 2)
+      / rect.height) * -5;
+
+  const rotateY =
+    ((event.clientX - rect.left - rect.width / 2)
+      / rect.width) * 5;
+
+
+  card.style.transform =
+    `perspective(800px)
+     rotateX(${rotateX}deg)
+     rotateY(${rotateY}deg)
+     translateY(-6px)`;
+
+});
 
     card.addEventListener('mouseleave', function(){
       card.style.transform = '';
