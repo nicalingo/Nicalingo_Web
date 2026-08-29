@@ -10,199 +10,278 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loader = document.getElementById("loader");
 
-    const finishLoader = () => {
+    function closeLoader() {
+
         if (!loader) return;
 
-        loader.style.transition =
-            "opacity 0.8s cubic-bezier(.2,.8,.2,1), visibility 0.8s ease";
-
-        loader.style.opacity = "0";
-        loader.style.visibility = "hidden";
-        loader.style.pointerEvents = "none";
+        loader.classList.add("loader-hidden");
 
         document.body.classList.add("page-ready");
 
         setTimeout(() => {
-            loader.remove();
-        }, 900);
-    };
+            loader.style.display = "none";
+        }, 1000);
+    }
 
     /*
-       Esperamos un poco para que el inicio
-       se sienta como una verdadera entrada.
+       Loader más largo.
+       La página entra después de 2.8 segundos.
     */
-    setTimeout(finishLoader, 1600);
+    setTimeout(closeLoader, 2800);
+
+
+    /*
+       Seguridad:
+       si algo impide ejecutar la animación,
+       nunca dejamos la página bloqueada.
+    */
+    setTimeout(() => {
+
+        if (loader) {
+            loader.classList.add("loader-hidden");
+            loader.style.pointerEvents = "none";
+        }
+
+    }, 4500);
 
 
     /* =====================================================
-       ELEMENTOS PRINCIPALES
+       NAVBAR
        ===================================================== */
 
     const navbar = document.getElementById("navbar");
-    const menuButton = document.getElementById("menuButton");
-    const mobileMenu = document.getElementById("mobileMenu");
 
-    const revealElements = document.querySelectorAll(".reveal");
-    const magneticElements = document.querySelectorAll(".magnetic");
-
-
-    /* =====================================================
-       NAVBAR DINÁMICA
-       ===================================================== */
-
-    const updateNavbar = () => {
+    function updateNavbar() {
 
         if (!navbar) return;
 
-        if (window.scrollY > 40) {
+        if (window.scrollY > 50) {
             navbar.classList.add("scrolled");
         } else {
             navbar.classList.remove("scrolled");
         }
 
-    };
+    }
 
-    window.addEventListener("scroll", updateNavbar, {
-        passive: true
-    });
+    window.addEventListener(
+        "scroll",
+        updateNavbar,
+        { passive: true }
+    );
 
     updateNavbar();
 
 
     /* =====================================================
-       MENÚ MOBILE
+       MOBILE MENU
        ===================================================== */
+
+    const menuButton =
+        document.getElementById("menuButton");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
 
     if (menuButton && mobileMenu) {
 
         menuButton.addEventListener("click", () => {
 
-            const isOpen =
-                mobileMenu.classList.contains("open");
+            menuButton.classList.toggle("active");
+            mobileMenu.classList.toggle("open");
 
-            if (isOpen) {
-
-                mobileMenu.classList.remove("open");
-                menuButton.classList.remove("active");
-                document.body.classList.remove("menu-open");
-
-            } else {
-
-                mobileMenu.classList.add("open");
-                menuButton.classList.add("active");
-                document.body.classList.add("menu-open");
-
-            }
+            document.body.classList.toggle(
+                "menu-open"
+            );
 
         });
 
 
-        mobileMenu.querySelectorAll("a").forEach(link => {
+        mobileMenu
+            .querySelectorAll("a")
+            .forEach(link => {
 
-            link.addEventListener("click", () => {
+                link.addEventListener("click", () => {
 
-                mobileMenu.classList.remove("open");
-                menuButton.classList.remove("active");
-                document.body.classList.remove("menu-open");
+                    menuButton.classList.remove(
+                        "active"
+                    );
 
-            });
+                    mobileMenu.classList.remove(
+                        "open"
+                    );
 
-        });
-
-    }
-
-
-    /* =====================================================
-       REVEAL AL HACER SCROLL
-       ===================================================== */
-
-    if (
-        "IntersectionObserver" in window &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-
-        const revealObserver = new IntersectionObserver(
-            (entries, observer) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add("is-visible");
-
-                        observer.unobserve(entry.target);
-
-                    }
+                    document.body.classList.remove(
+                        "menu-open"
+                    );
 
                 });
 
-            },
-            {
-                threshold: 0.12,
-                rootMargin: "0px 0px -60px 0px"
-            }
-        );
-
-
-        revealElements.forEach(element => {
-
-            revealObserver.observe(element);
-
-        });
-
-    } else {
-
-        revealElements.forEach(element => {
-
-            element.classList.add("is-visible");
-
-        });
+            });
 
     }
 
 
     /* =====================================================
-       ENTRADA ESCALONADA DE ELEMENTOS
+       REVEAL SYSTEM
        ===================================================== */
 
-    const staggerGroups = [
-        ".learning-grid",
-        ".ecosystem-grid",
-        ".coco-features",
-        ".level-map"
-    ];
+    const reveals =
+        document.querySelectorAll(".reveal");
 
-    staggerGroups.forEach(selector => {
 
-        document.querySelectorAll(selector).forEach(group => {
+    /*
+       Primero nos aseguramos de que todos
+       puedan ser mostrados por JavaScript.
+    */
 
-            const children = group.children;
+    reveals.forEach(element => {
 
-            Array.from(children).forEach((child, index) => {
-
-                child.style.transitionDelay =
-                    `${index * 0.09}s`;
-
-            });
-
-        });
+        element.style.willChange =
+            "opacity, transform";
 
     });
 
 
-    /* =====================================================
-       EFECTO MAGNÉTICO EN BOTONES
-       ===================================================== */
+    /*
+       Si el navegador soporta IntersectionObserver,
+       usamos animaciones al entrar en pantalla.
+    */
 
     if (
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        "IntersectionObserver" in window &&
+        !window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches
     ) {
 
-        magneticElements.forEach(element => {
+        const observer =
+            new IntersectionObserver(
+                entries => {
 
-            element.addEventListener("pointermove", event => {
+                    entries.forEach(entry => {
 
-                if (window.innerWidth < 800) return;
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList
+                                .add("is-visible");
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.08,
+                    rootMargin:
+                        "0px 0px -40px 0px"
+                }
+            );
+
+
+        reveals.forEach(element => {
+
+            observer.observe(element);
+
+        });
+
+
+        /*
+           HERO:
+           hacemos visible inmediatamente
+           lo que pertenece al primer viewport.
+        */
+
+        document
+            .querySelectorAll(
+                ".hero .reveal"
+            )
+            .forEach(element => {
+
+                setTimeout(() => {
+
+                    element.classList.add(
+                        "is-visible"
+                    );
+
+                }, 350);
+
+            });
+
+
+        /*
+           SEGUNDO SEGURO:
+           después de unos segundos revisamos
+           si algo sigue oculto.
+        */
+
+        setTimeout(() => {
+
+            reveals.forEach(element => {
+
+                const rect =
+                    element.getBoundingClientRect();
+
+                const visible =
+                    rect.top <
+                    window.innerHeight &&
+                    rect.bottom > 0;
+
+                if (visible) {
+
+                    element.classList.add(
+                        "is-visible"
+                    );
+
+                }
+
+            });
+
+        }, 1000);
+
+    } else {
+
+        /*
+           Si el navegador no soporta las animaciones,
+           mostramos todo.
+        */
+
+        reveals.forEach(element => {
+
+            element.classList.add(
+                "is-visible"
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       MAGNETIC BUTTONS
+       ===================================================== */
+
+    const magneticElements =
+        document.querySelectorAll(
+            ".magnetic"
+        );
+
+
+    magneticElements.forEach(element => {
+
+        element.addEventListener(
+            "pointermove",
+            event => {
+
+                if (window.innerWidth < 850)
+                    return;
 
                 const rect =
                     element.getBoundingClientRect();
@@ -217,145 +296,171 @@ document.addEventListener("DOMContentLoaded", () => {
                     rect.top -
                     rect.height / 2;
 
-                const moveX = x * 0.18;
-                const moveY = y * 0.18;
-
                 element.style.transform =
-                    `translate(${moveX}px, ${moveY}px)`;
+                    `translate(
+                        ${x * 0.15}px,
+                        ${y * 0.15}px
+                    )`;
 
-            });
+            }
+        );
 
 
-            element.addEventListener("pointerleave", () => {
+        element.addEventListener(
+            "pointerleave",
+            () => {
 
                 element.style.transform = "";
 
-            });
+            }
+        );
 
-        });
-
-    }
+    });
 
 
     /* =====================================================
-       TILT 3D PARA TARJETAS
+       CARD 3D TILT
        ===================================================== */
 
-    const cards = document.querySelectorAll(
-        ".learning-card, .eco-card, .floating-card, .teacher-card"
-    );
+    const cards =
+        document.querySelectorAll(
+            ".learning-card, .eco-card, .floating-card, .teacher-card"
+        );
 
-    if (
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
 
-        cards.forEach(card => {
+    cards.forEach(card => {
 
-            card.addEventListener("pointermove", event => {
+        card.addEventListener(
+            "pointermove",
+            event => {
 
-                if (window.innerWidth < 900) return;
+                if (window.innerWidth < 900)
+                    return;
 
                 const rect =
                     card.getBoundingClientRect();
 
                 const x =
-                    (event.clientX - rect.left) /
-                    rect.width - 0.5;
+                    (event.clientX -
+                        rect.left) /
+                    rect.width -
+                    0.5;
 
                 const y =
-                    (event.clientY - rect.top) /
-                    rect.height - 0.5;
+                    (event.clientY -
+                        rect.top) /
+                    rect.height -
+                    0.5;
 
-                const rotateX = y * -5;
-                const rotateY = x * 5;
+                const rotateX =
+                    y * -4;
+
+                const rotateY =
+                    x * 4;
 
                 card.style.transform =
                     `perspective(900px)
                      rotateX(${rotateX}deg)
                      rotateY(${rotateY}deg)
-                     translateY(-8px)`;
+                     translateY(-7px)`;
 
-            });
+            }
+        );
 
 
-            card.addEventListener("pointerleave", () => {
+        card.addEventListener(
+            "pointerleave",
+            () => {
 
                 card.style.transform = "";
 
-            });
+            }
+        );
 
-        });
-
-    }
+    });
 
 
     /* =====================================================
-       GLOW QUE SIGUE AL CURSOR
+       CURSOR GLOW
        ===================================================== */
 
     const cursorGlow =
-        document.querySelector(".cursor-glow");
+        document.querySelector(
+            ".cursor-glow"
+        );
 
-    if (
-        cursorGlow &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
 
-        window.addEventListener("pointermove", event => {
+    if (cursorGlow) {
 
-            cursorGlow.style.left =
-                `${event.clientX}px`;
+        window.addEventListener(
+            "pointermove",
+            event => {
 
-            cursorGlow.style.top =
-                `${event.clientY}px`;
+                cursorGlow.style.left =
+                    `${event.clientX}px`;
 
-        });
+                cursorGlow.style.top =
+                    `${event.clientY}px`;
+
+            },
+            { passive: true }
+        );
 
     }
 
 
     /* =====================================================
-       PARALLAX DEL HERO
+       HERO PARALLAX
        ===================================================== */
 
     const heroVisual =
-        document.querySelector(".hero-visual");
-
-    if (
-        heroVisual &&
-        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-
-        heroVisual.addEventListener("pointermove", event => {
-
-            if (window.innerWidth < 900) return;
-
-            const rect =
-                heroVisual.getBoundingClientRect();
-
-            const x =
-                (event.clientX - rect.left) /
-                rect.width - 0.5;
-
-            const y =
-                (event.clientY - rect.top) /
-                rect.height - 0.5;
-
-            heroVisual.style.transform =
-                `translate3d(
-                    ${x * 10}px,
-                    ${y * 8}px,
-                    0
-                )`;
-
-        });
+        document.querySelector(
+            ".hero-visual"
+        );
 
 
-        heroVisual.addEventListener("pointerleave", () => {
+    if (heroVisual) {
 
-            heroVisual.style.transform = "";
+        heroVisual.addEventListener(
+            "pointermove",
+            event => {
 
-        });
+                if (window.innerWidth < 900)
+                    return;
+
+                const rect =
+                    heroVisual.getBoundingClientRect();
+
+                const x =
+                    (event.clientX -
+                        rect.left) /
+                    rect.width -
+                    0.5;
+
+                const y =
+                    (event.clientY -
+                        rect.top) /
+                    rect.height -
+                    0.5;
+
+                heroVisual.style.transform =
+                    `translate(
+                        ${x * 8}px,
+                        ${y * 6}px
+                    )`;
+
+            }
+        );
+
+
+        heroVisual.addEventListener(
+            "pointerleave",
+            () => {
+
+                heroVisual.style.transform = "";
+
+            }
+        );
 
     }
 
@@ -364,101 +469,152 @@ document.addEventListener("DOMContentLoaded", () => {
        SMOOTH SCROLL
        ===================================================== */
 
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
+    document
+        .querySelectorAll(
+            'a[href^="#"]'
+        )
+        .forEach(link => {
 
-        link.addEventListener("click", event => {
+            link.addEventListener(
+                "click",
+                event => {
 
-            const targetId =
-                link.getAttribute("href");
+                    const id =
+                        link.getAttribute(
+                            "href"
+                        );
 
-            if (
-                !targetId ||
-                targetId === "#"
-            ) {
-                event.preventDefault();
-                return;
-            }
+                    if (
+                        !id ||
+                        id === "#"
+                    ) {
 
-            const target =
-                document.querySelector(targetId);
+                        event.preventDefault();
+                        return;
 
-            if (!target) return;
+                    }
 
-            event.preventDefault();
 
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+                    const target =
+                        document.querySelector(
+                            id
+                        );
+
+
+                    if (!target) return;
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+            );
 
         });
 
-    });
-
 
     /* =====================================================
-       ANIMACIÓN DE LOS NODOS DEL MAPA
+       LEVEL MAP INTERACTION
        ===================================================== */
 
-    const levelNodes =
-        document.querySelectorAll(".level-node");
-
-    levelNodes.forEach((node, index) => {
-
-        node.addEventListener("mouseenter", () => {
-
-            levelNodes.forEach(other => {
-
-                other.classList.remove("node-focus");
-
-            });
-
-            node.classList.add("node-focus");
-
-        });
+    const nodes =
+        document.querySelectorAll(
+            ".level-node"
+        );
 
 
-        node.addEventListener("mouseleave", () => {
+    nodes.forEach(node => {
 
-            node.classList.remove("node-focus");
+        node.addEventListener(
+            "mouseenter",
+            () => {
 
-        });
+                nodes.forEach(other => {
+
+                    other.classList.remove(
+                        "node-focus"
+                    );
+
+                });
+
+                node.classList.add(
+                    "node-focus"
+                );
+
+            }
+        );
+
+
+        node.addEventListener(
+            "mouseleave",
+            () => {
+
+                node.classList.remove(
+                    "node-focus"
+                );
+
+            }
+        );
 
     });
 
 
     /* =====================================================
-       EFECTO DE ESCRITURA EN WRITING
+       WRITING ANIMATION
        ===================================================== */
 
     const writing =
-        document.querySelector(".writing-animation");
+        document.querySelector(
+            ".writing-animation"
+        );
+
 
     if (writing) {
 
-        const text =
+        const originalText =
             "NicaLingo";
 
-        let position = 0;
+        let index = 0;
         let deleting = false;
 
-        const typeWriter = () => {
 
-            if (!document.body.contains(writing)) return;
+        function typeWriter() {
+
+            if (
+                !document.body.contains(
+                    writing
+                )
+            ) return;
+
 
             if (!deleting) {
 
-                position++;
+                index++;
 
                 writing.innerHTML =
-                    text.substring(0, position) +
+                    originalText.substring(
+                        0,
+                        index
+                    ) +
                     "<span>|</span>";
 
-                if (position >= text.length) {
+
+                if (
+                    index >=
+                    originalText.length
+                ) {
 
                     deleting = true;
 
-                    setTimeout(typeWriter, 1800);
+                    setTimeout(
+                        typeWriter,
+                        1600
+                    );
 
                     return;
 
@@ -466,17 +622,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
             } else {
 
-                position--;
+                index--;
 
                 writing.innerHTML =
-                    text.substring(0, position) +
+                    originalText.substring(
+                        0,
+                        index
+                    ) +
                     "<span>|</span>";
 
-                if (position <= 0) {
+
+                if (index <= 0) {
 
                     deleting = false;
 
-                    setTimeout(typeWriter, 500);
+                    setTimeout(
+                        typeWriter,
+                        500
+                    );
 
                     return;
 
@@ -484,24 +647,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
+
             setTimeout(
                 typeWriter,
-                deleting ? 80 : 130
+                deleting ? 70 : 120
             );
 
-        };
+        }
 
-        setTimeout(typeWriter, 1800);
+
+        setTimeout(
+            typeWriter,
+            1800
+        );
 
     }
 
 
     /* =====================================================
-       CONTADOR VISUAL DE XP
+       PROGRESS BAR
        ===================================================== */
 
     const progressBar =
-        document.querySelector(".progress-bar");
+        document.querySelector(
+            ".progress-bar"
+        );
+
 
     if (progressBar) {
 
@@ -511,15 +682,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     entries.forEach(entry => {
 
-                        if (entry.isIntersecting) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
                             progressBar.classList.add(
                                 "progress-loaded"
                             );
 
-                            progressObserver.unobserve(
-                                entry.target
-                            );
+                            progressObserver
+                                .unobserve(
+                                    entry.target
+                                );
 
                         }
 
@@ -531,77 +705,91 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             );
 
-        progressObserver.observe(progressBar);
+
+        progressObserver.observe(
+            progressBar
+        );
 
     }
 
 
     /* =====================================================
-       EFECTO HOVER EN TARJETAS
+       STAGGER DE TARJETAS
        ===================================================== */
 
-    document.querySelectorAll(
-        ".learning-card, .eco-card"
-    ).forEach(card => {
+    const staggerGroups = [
 
-        card.addEventListener("mouseenter", () => {
+        ".learning-grid",
+        ".ecosystem-grid",
+        ".coco-features"
 
-            card.classList.add("card-hover");
+    ];
 
-        });
 
-        card.addEventListener("mouseleave", () => {
+    staggerGroups.forEach(selector => {
 
-            card.classList.remove("card-hover");
+        document
+            .querySelectorAll(selector)
+            .forEach(group => {
 
-        });
+                Array
+                    .from(group.children)
+                    .forEach(
+                        (child, index) => {
+
+                            child.style
+                                .transitionDelay =
+                                `${index * 0.12}s`;
+
+                        }
+                    );
+
+            });
 
     });
 
 
     /* =====================================================
-       DETECTAR CAMBIO DE TAMAÑO
+       RESIZE
        ===================================================== */
 
-    window.addEventListener("resize", () => {
+    window.addEventListener(
+        "resize",
+        () => {
 
-        if (window.innerWidth > 900) {
+            if (window.innerWidth > 900) {
 
-            mobileMenu?.classList.remove("open");
-            menuButton?.classList.remove("active");
-            document.body.classList.remove("menu-open");
+                mobileMenu?.classList.remove(
+                    "open"
+                );
 
-        }
+                menuButton?.classList.remove(
+                    "active"
+                );
 
-    });
+                document.body.classList.remove(
+                    "menu-open"
+                );
 
-
-    /* =====================================================
-       FALLBACK DE SEGURIDAD
-       ===================================================== */
-
-    /*
-       Si por cualquier motivo algo falla después de cargar,
-       el loader NO debe quedarse bloqueando la página.
-    */
-
-    window.addEventListener("load", () => {
-
-        setTimeout(() => {
-
-            if (loader) {
-                finishLoader();
             }
 
-        }, 100);
-
-    });
+        }
+    );
 
 
     /* =====================================================
-       READY
+       PAGE READY
        ===================================================== */
 
-    document.body.classList.add("js-loaded");
+    window.addEventListener(
+        "load",
+        () => {
+
+            document.body.classList.add(
+                "page-loaded"
+            );
+
+        }
+    );
 
 });
