@@ -3881,3 +3881,89 @@ footer {
     }
 
 }
+/* =========================================================
+   NicaLingo — Animation Safety Layer
+   ========================================================= */
+
+/* Loader */
+
+.loader {
+    transition:
+        opacity 1s cubic-bezier(.22, 1, .36, 1),
+        visibility 1s ease;
+}
+
+.loader-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+
+/* Reveal */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity .9s cubic-bezier(.22, 1, .36, 1),
+        transform .9s cubic-bezier(.22, 1, .36, 1);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Hero */
+
+.hero .hero-kicker.is-visible {
+    transition-delay: .05s;
+}
+
+.hero .hero-description.is-visible {
+    transition-delay: .2s;
+}
+
+.hero .hero-actions.is-visible {
+    transition-delay: .35s;
+}
+
+.hero .hero-note.is-visible {
+    transition-delay: .5s;
+}
+
+
+/* Cards */
+
+.learning-card,
+.eco-card,
+.teacher-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+
+/* Loader progress */
+
+.loader-line div {
+    transform-origin: left center;
+}
+
+
+/* Reduce motion */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .loader {
+        transition: none !important;
+    }
+
+}
