@@ -1,557 +1,394 @@
-/* ============================================================
-   NICALINGO — INTERACTIONS
-============================================================ */
+/* =========================================================
+   NicaLingo — Interactive Experience
+   ========================================================= */
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ============================================================
-   LOADER
-============================================================ */
-
-window.addEventListener("load", () => {
+    /* =====================================================
+       LOADER
+       ===================================================== */
 
     const loader = document.getElementById("loader");
 
-    setTimeout(() => {
+    const finishLoader = () => {
+        if (!loader) return;
 
-        loader.classList.add("hide");
+        loader.style.transition =
+            "opacity 0.8s cubic-bezier(.2,.8,.2,1), visibility 0.8s ease";
 
-    }, 1900);
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
+        loader.style.pointerEvents = "none";
 
-});
+        document.body.classList.add("page-ready");
+
+        setTimeout(() => {
+            loader.remove();
+        }, 900);
+    };
+
+    /*
+       Esperamos un poco para que el inicio
+       se sienta como una verdadera entrada.
+    */
+    setTimeout(finishLoader, 1600);
 
 
-/* ============================================================
-   CURSOR GLOW
-============================================================ */
+    /* =====================================================
+       ELEMENTOS PRINCIPALES
+       ===================================================== */
 
-const cursorGlow = document.querySelector(".cursor-glow");
+    const navbar = document.getElementById("navbar");
+    const menuButton = document.getElementById("menuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-if (cursorGlow) {
+    const revealElements = document.querySelectorAll(".reveal");
+    const magneticElements = document.querySelectorAll(".magnetic");
 
-    window.addEventListener("mousemove", (event) => {
 
-        cursorGlow.style.left = `${event.clientX}px`;
-        cursorGlow.style.top = `${event.clientY}px`;
+    /* =====================================================
+       NAVBAR DINÁMICA
+       ===================================================== */
 
+    const updateNavbar = () => {
+
+        if (!navbar) return;
+
+        if (window.scrollY > 40) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+
+    };
+
+    window.addEventListener("scroll", updateNavbar, {
+        passive: true
     });
 
-}
+    updateNavbar();
 
 
-/* ============================================================
-   NAVBAR SCROLL
-============================================================ */
+    /* =====================================================
+       MENÚ MOBILE
+       ===================================================== */
 
-const navbar = document.getElementById("navbar");
+    if (menuButton && mobileMenu) {
 
-window.addEventListener("scroll", () => {
+        menuButton.addEventListener("click", () => {
 
-    if (window.scrollY > 60) {
+            const isOpen =
+                mobileMenu.classList.contains("open");
 
-        navbar.classList.add("scrolled");
+            if (isOpen) {
+
+                mobileMenu.classList.remove("open");
+                menuButton.classList.remove("active");
+                document.body.classList.remove("menu-open");
+
+            } else {
+
+                mobileMenu.classList.add("open");
+                menuButton.classList.add("active");
+                document.body.classList.add("menu-open");
+
+            }
+
+        });
+
+
+        mobileMenu.querySelectorAll("a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mobileMenu.classList.remove("open");
+                menuButton.classList.remove("active");
+                document.body.classList.remove("menu-open");
+
+            });
+
+        });
+
+    }
+
+
+    /* =====================================================
+       REVEAL AL HACER SCROLL
+       ===================================================== */
+
+    if (
+        "IntersectionObserver" in window &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+
+        const revealObserver = new IntersectionObserver(
+            (entries, observer) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("is-visible");
+
+                        observer.unobserve(entry.target);
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -60px 0px"
+            }
+        );
+
+
+        revealElements.forEach(element => {
+
+            revealObserver.observe(element);
+
+        });
 
     } else {
 
-        navbar.classList.remove("scrolled");
+        revealElements.forEach(element => {
+
+            element.classList.add("is-visible");
+
+        });
 
     }
 
-});
 
+    /* =====================================================
+       ENTRADA ESCALONADA DE ELEMENTOS
+       ===================================================== */
 
-/* ============================================================
-   REVEAL ON SCROLL
-============================================================ */
+    const staggerGroups = [
+        ".learning-grid",
+        ".ecosystem-grid",
+        ".coco-features",
+        ".level-map"
+    ];
 
-const revealElements =
-    document.querySelectorAll(".reveal");
+    staggerGroups.forEach(selector => {
 
-const revealObserver =
-    new IntersectionObserver(
+        document.querySelectorAll(selector).forEach(group => {
 
-        (entries) => {
+            const children = group.children;
 
-            entries.forEach((entry) => {
+            Array.from(children).forEach((child, index) => {
 
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add("visible");
-
-                    revealObserver.unobserve(
-                        entry.target
-                    );
-
-                }
+                child.style.transitionDelay =
+                    `${index * 0.09}s`;
 
             });
 
-        },
-
-        {
-            threshold: .12
-        }
-
-    );
-
-
-revealElements.forEach((element) => {
-
-    revealObserver.observe(element);
-
-});
-
-
-/* ============================================================
-   MAGNETIC BUTTONS
-============================================================ */
-
-const magneticElements =
-    document.querySelectorAll(".magnetic");
-
-magneticElements.forEach((element) => {
-
-    element.addEventListener("mousemove", (event) => {
-
-        const rect =
-            element.getBoundingClientRect();
-
-        const x =
-            event.clientX - rect.left - rect.width / 2;
-
-        const y =
-            event.clientY - rect.top - rect.height / 2;
-
-        element.style.transform =
-            `translate(${x * .12}px, ${y * .12}px)`;
-
-    });
-
-
-    element.addEventListener("mouseleave", () => {
-
-        element.style.transform = "";
-
-    });
-
-});
-
-
-/* ============================================================
-   MOBILE MENU
-============================================================ */
-
-const menuButton =
-    document.getElementById("menuButton");
-
-const mobileMenu =
-    document.getElementById("mobileMenu");
-
-
-if (menuButton) {
-
-    menuButton.addEventListener("click", () => {
-
-        mobileMenu.classList.toggle("open");
-
-        menuButton.classList.toggle("active");
-
-    });
-
-}
-
-
-document
-    .querySelectorAll(".mobile-menu a")
-    .forEach((link) => {
-
-        link.addEventListener("click", () => {
-
-            mobileMenu.classList.remove("open");
-
         });
 
     });
 
 
-/* ============================================================
-   PARALLAX HERO
-============================================================ */
+    /* =====================================================
+       EFECTO MAGNÉTICO EN BOTONES
+       ===================================================== */
 
-const heroVisual =
-    document.querySelector(".hero-visual");
+    if (
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
 
-if (heroVisual) {
+        magneticElements.forEach(element => {
 
-    window.addEventListener("mousemove", (event) => {
+            element.addEventListener("pointermove", event => {
 
-        const x =
-            (window.innerWidth / 2 - event.clientX) / 60;
+                if (window.innerWidth < 800) return;
 
-        const y =
-            (window.innerHeight / 2 - event.clientY) / 60;
+                const rect =
+                    element.getBoundingClientRect();
 
-        heroVisual.style.transform =
-            `translate(${x}px, ${y}px)`;
+                const x =
+                    event.clientX -
+                    rect.left -
+                    rect.width / 2;
 
-    });
+                const y =
+                    event.clientY -
+                    rect.top -
+                    rect.height / 2;
 
-}
+                const moveX = x * 0.18;
+                const moveY = y * 0.18;
 
+                element.style.transform =
+                    `translate(${moveX}px, ${moveY}px)`;
 
-/* ============================================================
-   CARD TILT
-============================================================ */
-
-const tiltCards =
-    document.querySelectorAll(
-        ".learning-card, .eco-card"
-    );
-
-
-tiltCards.forEach((card) => {
-
-    card.addEventListener("mousemove", (event) => {
-
-        const rect =
-            card.getBoundingClientRect();
-
-        const x =
-            event.clientX - rect.left;
-
-        const y =
-            event.clientY - rect.top;
-
-        const rotateX =
-            ((y / rect.height) - .5) * -6;
-
-        const rotateY =
-            ((x / rect.width) - .5) * 6;
-
-        card.style.transform =
-            `perspective(800px)
-             rotateX(${rotateX}deg)
-             rotateY(${rotateY}deg)
-             translateY(-12px)`;
-
-    });
+            });
 
 
-    card.addEventListener("mouseleave", () => {
+            element.addEventListener("pointerleave", () => {
 
-        card.style.transform = "";
+                element.style.transform = "";
 
-    });
+            });
 
-});
-
-
-/* ============================================================
-   MOUSE PARALLAX FOR FLOATING SYMBOLS
-============================================================ */
-
-const symbols =
-    document.querySelectorAll(".floating-symbol");
-
-
-window.addEventListener("mousemove", (event) => {
-
-    const x =
-        (event.clientX / window.innerWidth - .5);
-
-    const y =
-        (event.clientY / window.innerHeight - .5);
-
-
-    symbols.forEach((symbol, index) => {
-
-        const strength =
-            (index + 1) * 12;
-
-        symbol.style.transform =
-            `translate(
-                ${x * strength}px,
-                ${y * strength}px
-            )`;
-
-    });
-
-});
-
-
-/* ============================================================
-   NUMBER COUNTER
-============================================================ */
-
-function animateCounter(element, target) {
-
-    let current = 0;
-
-    const duration = 1200;
-
-    const start = performance.now();
-
-    function update(time) {
-
-        const progress =
-            Math.min(
-                (time - start) / duration,
-                1
-            );
-
-        current =
-            Math.floor(
-                progress * target
-            );
-
-        element.textContent =
-            current.toLocaleString();
-
-        if (progress < 1) {
-
-            requestAnimationFrame(update);
-
-        }
+        });
 
     }
 
-    requestAnimationFrame(update);
 
-}
+    /* =====================================================
+       TILT 3D PARA TARJETAS
+       ===================================================== */
 
-
-/* ============================================================
-   LEVEL NODE INTERACTION
-============================================================ */
-
-const levelNodes =
-    document.querySelectorAll(".level-node");
-
-
-levelNodes.forEach((node, index) => {
-
-    node.addEventListener("mouseenter", () => {
-
-        levelNodes.forEach((other) => {
-
-            other.style.opacity =
-                other === node ? "1" : ".45";
-
-        });
-
-    });
-
-
-    node.addEventListener("mouseleave", () => {
-
-        levelNodes.forEach((other) => {
-
-            other.style.opacity = "1";
-
-        });
-
-    });
-
-});
-
-
-/* ============================================================
-   SCROLL PROGRESS
-============================================================ */
-
-const scrollProgress =
-    document.createElement("div");
-
-scrollProgress.style.position = "fixed";
-scrollProgress.style.top = "0";
-scrollProgress.style.left = "0";
-scrollProgress.style.height = "3px";
-scrollProgress.style.width = "0%";
-scrollProgress.style.background =
-    "var(--yellow)";
-scrollProgress.style.zIndex = "10001";
-scrollProgress.style.transition =
-    "width .1s linear";
-
-document.body.appendChild(scrollProgress);
-
-
-window.addEventListener("scroll", () => {
-
-    const scrollTop =
-        window.scrollY;
-
-    const documentHeight =
-        document.documentElement.scrollHeight -
-        window.innerHeight;
-
-    const percentage =
-        (scrollTop / documentHeight) * 100;
-
-    scrollProgress.style.width =
-        `${percentage}%`;
-
-});
-
-
-/* ============================================================
-   IMAGE HOVER MAGNIFICATION
-============================================================ */
-
-const logo =
-    document.querySelectorAll(
-        ".nav-logo img, .cta-logo img, .footer-top img"
+    const cards = document.querySelectorAll(
+        ".learning-card, .eco-card, .floating-card, .teacher-card"
     );
 
+    if (
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
 
-logo.forEach((image) => {
+        cards.forEach(card => {
 
-    image.addEventListener("mouseenter", () => {
+            card.addEventListener("pointermove", event => {
 
-        image.style.transform =
-            "scale(1.06) rotate(-2deg)";
+                if (window.innerWidth < 900) return;
 
-    });
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    (event.clientX - rect.left) /
+                    rect.width - 0.5;
+
+                const y =
+                    (event.clientY - rect.top) /
+                    rect.height - 0.5;
+
+                const rotateX = y * -5;
+                const rotateY = x * 5;
+
+                card.style.transform =
+                    `perspective(900px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)
+                     translateY(-8px)`;
+
+            });
 
 
-    image.addEventListener("mouseleave", () => {
+            card.addEventListener("pointerleave", () => {
 
-        image.style.transform = "";
+                card.style.transform = "";
 
-    });
+            });
 
-});
+        });
+
+    }
 
 
-/* ============================================================
-   BUTTON RIPPLE
-============================================================ */
+    /* =====================================================
+       GLOW QUE SIGUE AL CURSOR
+       ===================================================== */
 
-document
-    .querySelectorAll(
-        ".primary-button, .cta-button"
-    )
-    .forEach((button) => {
+    const cursorGlow =
+        document.querySelector(".cursor-glow");
 
-        button.addEventListener("click", function(event) {
+    if (
+        cursorGlow &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
 
-            const ripple =
-                document.createElement("span");
+        window.addEventListener("pointermove", event => {
 
-            ripple.classList.add("ripple");
+            cursorGlow.style.left =
+                `${event.clientX}px`;
+
+            cursorGlow.style.top =
+                `${event.clientY}px`;
+
+        });
+
+    }
+
+
+    /* =====================================================
+       PARALLAX DEL HERO
+       ===================================================== */
+
+    const heroVisual =
+        document.querySelector(".hero-visual");
+
+    if (
+        heroVisual &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+
+        heroVisual.addEventListener("pointermove", event => {
+
+            if (window.innerWidth < 900) return;
 
             const rect =
-                button.getBoundingClientRect();
+                heroVisual.getBoundingClientRect();
 
-            ripple.style.left =
-                `${event.clientX - rect.left}px`;
+            const x =
+                (event.clientX - rect.left) /
+                rect.width - 0.5;
 
-            ripple.style.top =
-                `${event.clientY - rect.top}px`;
+            const y =
+                (event.clientY - rect.top) /
+                rect.height - 0.5;
 
-            button.appendChild(ripple);
-
-            setTimeout(() => {
-
-                ripple.remove();
-
-            }, 700);
+            heroVisual.style.transform =
+                `translate3d(
+                    ${x * 10}px,
+                    ${y * 8}px,
+                    0
+                )`;
 
         });
 
-    });
+
+        heroVisual.addEventListener("pointerleave", () => {
+
+            heroVisual.style.transform = "";
+
+        });
+
+    }
 
 
-/* ============================================================
-   ACTIVE SECTION NAVIGATION
-============================================================ */
+    /* =====================================================
+       SMOOTH SCROLL
+       ===================================================== */
 
-const sections =
-    document.querySelectorAll(
-        "section[id]"
-    );
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-const navLinks =
-    document.querySelectorAll(
-        ".nav-links a"
-    );
-
-
-const sectionObserver =
-    new IntersectionObserver(
-
-        (entries) => {
-
-            entries.forEach((entry) => {
-
-                if (entry.isIntersecting) {
-
-                    navLinks.forEach((link) => {
-
-                        link.classList.remove("active");
-
-                        if (
-                            link.getAttribute("href") ===
-                            `#${entry.target.id}`
-                        ) {
-
-                            link.classList.add("active");
-
-                        }
-
-                    });
-
-                }
-
-            });
-
-        },
-
-        {
-            rootMargin:
-                "-40% 0px -50% 0px"
-        }
-
-    );
-
-
-sections.forEach((section) => {
-
-    sectionObserver.observe(section);
-
-});
-
-
-/* ============================================================
-   SMOOTH ANCHOR
-============================================================ */
-
-document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((anchor) => {
-
-        anchor.addEventListener("click", function(event) {
+        link.addEventListener("click", event => {
 
             const targetId =
-                this.getAttribute("href");
+                link.getAttribute("href");
 
             if (
-                targetId === "#" ||
-                !targetId
+                !targetId ||
+                targetId === "#"
             ) {
+                event.preventDefault();
                 return;
             }
 
             const target =
                 document.querySelector(targetId);
 
-            if (!target) {
-                return;
-            }
+            if (!target) return;
 
             event.preventDefault();
 
             target.scrollIntoView({
-                behavior: "smooth"
+                behavior: "smooth",
+                block: "start"
             });
 
         });
@@ -559,51 +396,212 @@ document
     });
 
 
-/* ============================================================
-   KONAMI / SECRET EASTER EGG
-============================================================ */
+    /* =====================================================
+       ANIMACIÓN DE LOS NODOS DEL MAPA
+       ===================================================== */
 
-let secretCode = [];
+    const levelNodes =
+        document.querySelectorAll(".level-node");
 
-const konamiCode = [
-    "ArrowUp",
-    "ArrowUp",
-    "ArrowDown",
-    "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
-    "ArrowLeft",
-    "ArrowRight"
-];
+    levelNodes.forEach((node, index) => {
+
+        node.addEventListener("mouseenter", () => {
+
+            levelNodes.forEach(other => {
+
+                other.classList.remove("node-focus");
+
+            });
+
+            node.classList.add("node-focus");
+
+        });
 
 
-document.addEventListener("keydown", (event) => {
+        node.addEventListener("mouseleave", () => {
 
-    secretCode.push(event.key);
+            node.classList.remove("node-focus");
 
-    if (secretCode.length > konamiCode.length) {
+        });
 
-        secretCode.shift();
+    });
+
+
+    /* =====================================================
+       EFECTO DE ESCRITURA EN WRITING
+       ===================================================== */
+
+    const writing =
+        document.querySelector(".writing-animation");
+
+    if (writing) {
+
+        const text =
+            "NicaLingo";
+
+        let position = 0;
+        let deleting = false;
+
+        const typeWriter = () => {
+
+            if (!document.body.contains(writing)) return;
+
+            if (!deleting) {
+
+                position++;
+
+                writing.innerHTML =
+                    text.substring(0, position) +
+                    "<span>|</span>";
+
+                if (position >= text.length) {
+
+                    deleting = true;
+
+                    setTimeout(typeWriter, 1800);
+
+                    return;
+
+                }
+
+            } else {
+
+                position--;
+
+                writing.innerHTML =
+                    text.substring(0, position) +
+                    "<span>|</span>";
+
+                if (position <= 0) {
+
+                    deleting = false;
+
+                    setTimeout(typeWriter, 500);
+
+                    return;
+
+                }
+
+            }
+
+            setTimeout(
+                typeWriter,
+                deleting ? 80 : 130
+            );
+
+        };
+
+        setTimeout(typeWriter, 1800);
 
     }
 
-    if (
-        secretCode.join(",") ===
-        konamiCode.join(",")
-    ) {
 
-        document.body.classList.add(
-            "coco-party"
-        );
+    /* =====================================================
+       CONTADOR VISUAL DE XP
+       ===================================================== */
+
+    const progressBar =
+        document.querySelector(".progress-bar");
+
+    if (progressBar) {
+
+        const progressObserver =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            progressBar.classList.add(
+                                "progress-loaded"
+                            );
+
+                            progressObserver.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.5
+                }
+            );
+
+        progressObserver.observe(progressBar);
+
+    }
+
+
+    /* =====================================================
+       EFECTO HOVER EN TARJETAS
+       ===================================================== */
+
+    document.querySelectorAll(
+        ".learning-card, .eco-card"
+    ).forEach(card => {
+
+        card.addEventListener("mouseenter", () => {
+
+            card.classList.add("card-hover");
+
+        });
+
+        card.addEventListener("mouseleave", () => {
+
+            card.classList.remove("card-hover");
+
+        });
+
+    });
+
+
+    /* =====================================================
+       DETECTAR CAMBIO DE TAMAÑO
+       ===================================================== */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 900) {
+
+            mobileMenu?.classList.remove("open");
+            menuButton?.classList.remove("active");
+            document.body.classList.remove("menu-open");
+
+        }
+
+    });
+
+
+    /* =====================================================
+       FALLBACK DE SEGURIDAD
+       ===================================================== */
+
+    /*
+       Si por cualquier motivo algo falla después de cargar,
+       el loader NO debe quedarse bloqueando la página.
+    */
+
+    window.addEventListener("load", () => {
 
         setTimeout(() => {
 
-            document.body.classList.remove(
-                "coco-party"
-            );
+            if (loader) {
+                finishLoader();
+            }
 
-        }, 5000);
+        }, 100);
 
-    }
+    });
+
+
+    /* =====================================================
+       READY
+       ===================================================== */
+
+    document.body.classList.add("js-loaded");
 
 });
