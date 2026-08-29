@@ -20,8 +20,6 @@ Coloca los archivos como:
 - `fonts/Bernoru-Basma.woff2`
 - `fonts/Basma.woff2`
 
-Si todavía no tienes las fuentes en `.woff2`, la página usa fallbacks hasta que las agregues.
-
 ## Publicar en GitHub Pages
 
 1. Crea un repositorio.
@@ -30,5 +28,3 @@ Si todavía no tienes las fuentes en `.woff2`, la página usa fallbacks hasta qu
 4. Selecciona `Deploy from a branch`.
 5. Elige `main` y `/root`.
 6. Guarda y espera a que GitHub publique la página.
-
-No necesita Node.js, npm ni servidor.
