@@ -99,18 +99,18 @@
 
 
 <!-- ============================================================
+<!-- ============================================================
      HERO VISUAL (OPTIMIZADO CON ELEMENTOS INTERACTIVOS)
 ============================================================ -->
 <div class="hero-visual">
-    <img src="assets/images/hero/nicaragua-cultura.png" class="hero-img">
+    
     <!-- Tarjeta Principal de Progreso -->
     <div class="progress-card">
         <div class="card-header">
             <span class="card-title">TU PROGRESO</span>
-            <!-- Medallita de Racha Interna -->
+            <!-- Medallita de Racha Interna con emoji de respaldo -->
             <div class="inner-badge-streak">
-                <img src="assets/icon-fire.png" alt="Racha" class="badge-icon-mini">
-                <span>12</span>
+                <span>🔥 12</span>
             </div>
         </div>
 
@@ -120,7 +120,9 @@
             <div class="sparkle spark-2">✦</div>
             <div class="sparkle spark-3">✦</div>
             <div class="avatar-circle">
-                <img src="assets/coco-avatar.png" alt="Mascota Coco" class="coco-img">
+                <!-- Se oculta automáticamente si la imagen no existe y activa el emoji del coco -->
+                <img src="nicalingo-logo.png" alt="Mascota Coco" class="coco-img" onerror="this.style.display='none';">
+                <span class="coco-fallback">🥥</span>
             </div>
         </div>
 
@@ -142,10 +144,10 @@
         </div>
     </div>
 
-    <!-- Elementos Flotantes Externos (Badges) -->
+    <!-- Elementos Flotantes Externos (Badges con emojis estables) -->
     <!-- Racha Diaria (Superior Derecha) -->
     <div class="floating-badge badge-streak" data-depth="0.15">
-        <img src="assets/badge-fire.png" alt="Fuego" class="badge-img">
+        <span class="badge-emoji">🔥</span>
         <div class="badge-text">
             <span class="badge-label">Racha</span>
             <span class="badge-value">12 días</span>
@@ -154,7 +156,7 @@
 
     <!-- Experiencia total (Inferior Izquierda) -->
     <div class="floating-badge badge-xp" data-depth="0.2">
-        <img src="assets/badge-star.png" alt="Estrella" class="badge-img">
+        <span class="badge-emoji">⭐</span>
         <div class="badge-text">
             <span class="badge-label">Experiencia</span>
             <span class="badge-value">1,840 XP</span>
@@ -163,13 +165,14 @@
 
     <!-- Monedas acumuladas (Inferior Derecha) -->
     <div class="floating-badge badge-coins" data-depth="0.1">
-        <img src="assets/badge-coin.png" alt="Moneda" class="badge-img">
+        <span class="badge-emoji">🪙</span>
         <div class="badge-text">
             <span class="badge-label">Monedas</span>
             <span class="badge-value">540</span>
         </div>
     </div>
 </div>
+
 
 
 
