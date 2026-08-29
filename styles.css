@@ -694,7 +694,19 @@ button {
 
 }
 
+.hero-img {
+  position: absolute;
+  width: 420px;
+  right: 0;
+  bottom: 0;
+  opacity: 0.9;
+  animation: floatHero 6s ease-in-out infinite;
+}
 
+@keyframes floatHero {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
 /* DESCRIPTION */
 
 .hero-description {
