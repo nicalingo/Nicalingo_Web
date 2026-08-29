@@ -37,7 +37,7 @@ h1,h2,h3{
 font-family:'Baloo 2',cursive;
 }
 
-/* HEADER */
+
 header{
 position:fixed;
 top:0;
@@ -86,7 +86,7 @@ text-decoration:none;
 font-weight:bold;
 }
 
-/* HERO */
+
 .hero{
 margin-top:100px;
 display:flex;
@@ -118,7 +118,7 @@ animation:float 3s ease-in-out infinite;
 50%{transform:translateY(-15px);}
 }
 
-/* CARDS */
+
 .section{
 padding:80px 40px;
 text-align:center;
@@ -145,20 +145,19 @@ box-shadow:0 5px 10px rgba(0,0,0,0.1);
 transform:translateY(-10px) rotate(1deg);
 }
 
-/* DARK SECTION */
 .dark{
 background:var(--azul);
 color:white;
 }
 
-/* FOOTER */
+
 footer{
 background:#eee;
 padding:40px;
 text-align:center;
 }
 
-/* MENU MOBILE */
+
 .menu-toggle{
 display:none;
 font-size:25px;
@@ -182,7 +181,7 @@ nav.active{display:flex;}
 .hero img{margin-top:30px;}
 }
 
-/* SCROLL ANIMATION */
+
 .fade{
 opacity:0;
 transform:translateY(30px);
@@ -193,7 +192,7 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* GLOW CURSOR */
+
 .glow{
 position:fixed;
 width:300px;
@@ -227,7 +226,7 @@ NicaLingo
 </nav>
 </header>
 
-<!-- HERO -->
+
 <section class="hero">
 <div class="hero-text">
 <h1>Aprende las lenguas de Nicaragua jugando</h1>
@@ -239,7 +238,7 @@ NicaLingo
 <img src="coco-hero.png" alt="Coco">
 </section>
 
-<!-- ECOSISTEMA -->
+
 <section class="section fade">
 <h2>Ecosistema de Identidad</h2>
 <div class="cards">
@@ -249,7 +248,7 @@ NicaLingo
 </div>
 </section>
 
-<!-- APRENDIZAJE -->
+
 <section class="section fade">
 <h2>Cómo se aprende</h2>
 <div class="cards">
@@ -260,7 +259,7 @@ NicaLingo
 </div>
 </section>
 
-<!-- DOCENTES -->
+
 <section class="section dark fade">
 <h2>Portal Educativo</h2>
 <p>Generador de tests y biblioteca de recursos</p>
@@ -270,7 +269,7 @@ Ley No. 28 · Protección de Lenguas · Eje N°4 MINED
 </p>
 </section>
 
-<!-- EQUIPO -->
+
 <section class="section fade">
 <h2>Quiénes somos</h2>
 <p>
@@ -280,7 +279,7 @@ Coco simboliza cultura, estudio y conexión con la tierra.
 </p>
 </section>
 
-<!-- CTA -->
+
 <section class="section fade">
 <h2>Únete a la revitalización lingüística de Nicaragua</h2>
 <br>
@@ -294,18 +293,18 @@ Coco simboliza cultura, estudio y conexión con la tierra.
 
 <script>
 
-/* MENU */
+
 function toggleMenu(){
 document.getElementById("nav").classList.toggle("active");
 }
 
-/* HEADER SCROLL */
+
 window.addEventListener("scroll",()=>{
 const header=document.getElementById("header");
 header.classList.toggle("scrolled",window.scrollY>50);
 });
 
-/* SCROLL FADE */
+
 const faders=document.querySelectorAll(".fade");
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
@@ -316,7 +315,7 @@ entry.target.classList.add("show");
 });
 faders.forEach(el=>observer.observe(el));
 
-/* GLOW FOLLOW */
+
 const glow=document.getElementById("glow");
 let x=0,y=0;
 
