@@ -1,10 +1,5 @@
-// ==========================================================
-// NicaLingo — interactividad y animaciones
-// ==========================================================
-
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ---------- Luz sutil que sigue al cursor ---------- */
 (function cursorGlow(){
   const glow = document.getElementById('cursorGlow');
   if(!glow) return;
@@ -24,7 +19,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   window.addEventListener('mouseleave', () => glow.classList.remove('is-active'));
 
   function raf(){
-    // interpolación suave (lerp) para que la luz "acompañe" con un poco de inercia
+
     x += (targetX - x) * 0.12;
     y += (targetY - y) * 0.12;
     glow.style.transform = `translate(${x}px, ${y}px)`;
@@ -33,7 +28,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   raf();
 })();
 
-/* ---------- Header: sombra/compactado al hacer scroll ---------- */
+
 (function headerScroll(){
   const header = document.getElementById('siteHeader');
   if(!header) return;
@@ -44,7 +39,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   onScroll();
 })();
 
-/* ---------- Menú móvil ---------- */
+
 (function mobileNav(){
   const toggle = document.getElementById('navToggle');
   const nav = document.getElementById('mainNav');
@@ -63,7 +58,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   });
 })();
 
-/* ---------- Scroll reveal ---------- */
+
 (function scrollReveal(){
   const items = document.querySelectorAll('.reveal');
   if(!items.length) return;
