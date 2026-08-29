@@ -98,202 +98,78 @@
     </div>
 
 
-    <!-- =========================================================
-         HERO
-    ========================================================== -->
-
-    <main>
-
-        <section class="hero" id="inicio">
-
-            <!-- blobs -->
-
-            <div class="hero-blob blob-one"></div>
-            <div class="hero-blob blob-two"></div>
-            <div class="hero-blob blob-three"></div>
-
-            <!-- decoraciones -->
-
-            <div class="floating-symbol symbol-one">✦</div>
-            <div class="floating-symbol symbol-two">✷</div>
-            <div class="floating-symbol symbol-three">✦</div>
-
-            <div class="hero-content">
-
-                <div class="hero-kicker reveal">
-                    <span class="kicker-dot"></span>
-                    Cultura · Tecnología · Identidad
-                </div>
-
-                <h1 class="hero-title">
-
-                    <span class="line-mask">
-                        <span>Tu idioma.</span>
-                    </span>
-
-                    <span class="line-mask">
-                        <span class="yellow-text">Tus raíces.</span>
-                    </span>
-
-                    <span class="line-mask">
-                        <span>Tu historia.</span>
-                    </span>
-
-                </h1>
-
-                <p class="hero-description reveal">
-                    Una nueva forma de aprender las lenguas indígenas
-                    de Nicaragua mientras descubrís las historias,
-                    tradiciones y raíces que nos conectan.
-                </p>
-
-                <div class="hero-actions reveal">
-
-                    <a href="#comenzar" class="primary-button magnetic">
-
-                        <span class="button-fill"></span>
-
-                        <span class="button-content">
-                            Explorar NicaLingo
-                            <strong>↗</strong>
-                        </span>
-
-                    </a>
-
-                    <a href="#aprende" class="secondary-button">
-
-                        <span class="play-icon">▶</span>
-
-                        Descubrir cómo funciona
-
-                    </a>
-
-                </div>
-
-                <div class="hero-note reveal">
-
-                    <span>✦</span>
-                    Diseñado para aprender jugando.
-                </div>
-
+<!-- ============================================================
+     HERO VISUAL (OPTIMIZADO CON ELEMENTOS INTERACTIVOS)
+============================================================ -->
+<div class="hero-visual">
+    <!-- Tarjeta Principal de Progreso -->
+    <div class="progress-card">
+        <div class="card-header">
+            <span class="card-title">TU PROGRESO</span>
+            <!-- Medallita de Racha Interna -->
+            <div class="inner-badge-streak">
+                <img src="assets/icon-fire.png" alt="Racha" class="badge-icon-mini">
+                <span>12</span>
             </div>
+        </div>
 
-
-            <!-- =====================================================
-                 HERO VISUAL
-            ====================================================== -->
-
-            <div class="hero-visual">
-
-                <div class="orbit orbit-one"></div>
-                <div class="orbit orbit-two"></div>
-
-                <div class="hero-card-back"></div>
-
-                <div class="hero-card">
-
-                    <div class="card-top">
-
-                        <span class="mini-label">
-                            TU PROGRESO
-                        </span>
-
-                        <span class="streak">
-                            🔥 12
-                        </span>
-
-                    </div>
-
-                    <div class="coco-container">
-
-                        <div class="coco-ring"></div>
-
-                        <div class="coco-shadow"></div>
-
-                        <div class="coco">
-                            🥥
-                        </div>
-
-                        <div class="coco-spark spark-a">✦</div>
-                        <div class="coco-spark spark-b">✦</div>
-
-                    </div>
-
-                    <div class="lesson-info">
-
-                        <span class="lesson-tag">
-                            LECCIÓN 08
-                        </span>
-
-                        <h3>
-                            Saludos y presentación
-                        </h3>
-
-                        <div class="progress">
-
-                            <div class="progress-bar"></div>
-
-                        </div>
-
-                        <div class="lesson-bottom">
-                            <span>68% completado</span>
-                            <span>+25 XP</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- floating mini cards -->
-
-                <div class="floating-card floating-card-one">
-
-                    <span>🔥</span>
-
-                    <div>
-                        <small>Racha</small>
-                        <strong>12 días</strong>
-                    </div>
-
-                </div>
-
-                <div class="floating-card floating-card-two">
-
-                    <span>⭐</span>
-
-                    <div>
-                        <small>Experiencia</small>
-                        <strong>1,840 XP</strong>
-                    </div>
-
-                </div>
-
-                <div class="floating-card floating-card-three">
-
-                    <span>🪙</span>
-
-                    <div>
-                        <small>Monedas</small>
-                        <strong>540</strong>
-                    </div>
-
-                </div>
-
+        <!-- Contenedor del Avatar del Coco con Destellos -->
+        <div class="avatar-container">
+            <div class="sparkle spark-1">✦</div>
+            <div class="sparkle spark-2">✦</div>
+            <div class="sparkle spark-3">✦</div>
+            <div class="avatar-circle">
+                <img src="assets/coco-avatar.png" alt="Mascota Coco" class="coco-img">
             </div>
+        </div>
 
+        <!-- Información de la Lección actual -->
+        <div class="lesson-info">
+            <span class="lesson-kicker">LECCIÓN 08</span>
+            <h3 class="lesson-title">Saludos y presentación</h3>
+        </div>
 
-            <div class="scroll-indicator">
-
-                <span>SCROLL PARA DESCUBRIR</span>
-
-                <div class="scroll-line">
-                    <div></div>
-                </div>
-
+        <!-- Barra de Progreso Dinámica -->
+        <div class="progress-wrapper">
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" style="width: 68%;"></div>
             </div>
+            <div class="progress-stats">
+                <span class="progress-percent">68% completado</span>
+                <span class="progress-xp-gain">+25 XP</span>
+            </div>
+        </div>
+    </div>
 
-        </section>
+    <!-- Elementos Flotantes Externos (Badges) -->
+    <!-- Racha Diaria (Superior Derecha) -->
+    <div class="floating-badge badge-streak" data-depth="0.15">
+        <img src="assets/badge-fire.png" alt="Fuego" class="badge-img">
+        <div class="badge-text">
+            <span class="badge-label">Racha</span>
+            <span class="badge-value">12 días</span>
+        </div>
+    </div>
+
+    <!-- Experiencia total (Inferior Izquierda) -->
+    <div class="floating-badge badge-xp" data-depth="0.2">
+        <img src="assets/badge-star.png" alt="Estrella" class="badge-img">
+        <div class="badge-text">
+            <span class="badge-label">Experiencia</span>
+            <span class="badge-value">1,840 XP</span>
+        </div>
+    </div>
+
+    <!-- Monedas acumuladas (Inferior Derecha) -->
+    <div class="floating-badge badge-coins" data-depth="0.1">
+        <img src="assets/badge-coin.png" alt="Moneda" class="badge-img">
+        <div class="badge-text">
+            <span class="badge-label">Monedas</span>
+            <span class="badge-value">540</span>
+        </div>
+    </div>
+</div>
+
 
 
         <!-- =========================================================
