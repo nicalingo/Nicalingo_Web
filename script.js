@@ -4,713 +4,614 @@
 // Vanilla JavaScript
 // ==========================================================
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ==========================================================
-   CONFIGURACIÓN GLOBAL
-   ========================================================== */
+  /* ========================================================
+     AÑO DEL FOOTER
+     ======================================================== */
 
-const reducedMotion = window.matchMedia(
-  '(prefers-reduced-motion: reduce)'
-).matches;
+  const year = document.getElementById("year");
 
-const isTouchDevice =
-  window.matchMedia('(pointer: coarse)').matches;
-
-
-/* ==========================================================
-   AÑO AUTOMÁTICO
-   No genera error si #year no existe
-   ========================================================== */
-
-(function setYear(){
-
-  const year = document.getElementById('year');
-
-  if(year){
+  if (year) {
     year.textContent = new Date().getFullYear();
   }
 
-})();
+
+  /* ========================================================
+     REDUCED MOTION
+     ======================================================== */
+
+  const reducedMotion =
+    window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const isTouchDevice =
+    window.matchMedia("(hover: none), (pointer: coarse)").matches;
 
 
-/* ==========================================================
-   CURSOR GLOW
-   Se desactiva en touch y reduced-motion
-   ========================================================== */
+  /* ========================================================
+     CURSOR GLOW
+     ======================================================== */
 
-(function cursorGlow(){
+  function cursorGlow(){
 
-  const glow = document.getElementById('cursorGlow');
+    const glow =
+      document.getElementById("cursorGlow");
 
-  if(!glow) return;
-  if(reducedMotion) return;
-  if(isTouchDevice) return;
+    if (!glow) return;
 
-  let targetX = window.innerWidth / 2;
-  let targetY = window.innerHeight / 2;
-
-  let x = targetX;
-  let y = targetY;
-
-  let active = false;
-
-  window.addEventListener(
-    'mousemove',
-    (event) => {
-
-      targetX = event.clientX;
-      targetY = event.clientY;
-
-      if(!active){
-
-        active = true;
-
-        glow.classList.add('is-active');
-
-      }
-
-    },
-    {passive:true}
-  );
-
-
-  window.addEventListener(
-    'mouseleave',
-    () => {
-
-      active = false;
-
-      glow.classList.remove('is-active');
-
+    if (reducedMotion.matches || isTouchDevice) {
+      glow.style.display = "none";
+      return;
     }
-  );
+
+    let targetX =
+      window.innerWidth / 2;
+
+    let targetY =
+      window.innerHeight / 2;
+
+    let currentX = targetX;
+    let currentY = targetY;
+
+    let active = false;
 
 
-  function animate(){
+    window.addEventListener(
+      "mousemove",
+      (event) => {
 
-    x += (targetX - x) * 0.12;
-    y += (targetY - y) * 0.12;
+        targetX = event.clientX;
+        targetY = event.clientY;
 
-    glow.style.transform =
-      `translate3d(${x}px, ${y}px, 0)`;
+        if (!active) {
 
-    requestAnimationFrame(animate);
+          active = true;
 
+          glow.classList.add("is-active");
+        }
+      },
+      { passive:true }
+    );
+
+
+    window.addEventListener(
+      "mouseleave",
+      () => {
+
+        active = false;
+
+        glow.classList.remove("is-active");
+      }
+    );
+
+
+    function animate(){
+
+      currentX +=
+        (targetX - currentX) * .12;
+
+      currentY +=
+        (targetY - currentY) * .12;
+
+      glow.style.transform =
+        `translate(${currentX}px, ${currentY}px)`;
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   }
 
-  animate();
-
-})();
+  cursorGlow();
 
 
-/* ==========================================================
-   HEADER AL HACER SCROLL
-   ========================================================== */
-
-(function headerScroll(){
+  /* ========================================================
+     HEADER AL HACER SCROLL
+     ======================================================== */
 
   const header =
-    document.getElementById('siteHeader');
-
-  if(!header) return;
+    document.getElementById("siteHeader");
 
 
-  function updateHeader(){
+  if (header){
 
-    header.classList.toggle(
-      'is-scrolled',
-      window.scrollY > 12
+    const updateHeader = () => {
+
+      header.classList.toggle(
+        "is-scrolled",
+        window.scrollY > 12
+      );
+    };
+
+    window.addEventListener(
+      "scroll",
+      updateHeader,
+      { passive:true }
     );
 
+    updateHeader();
   }
 
 
-  window.addEventListener(
-    'scroll',
-    updateHeader,
-    {passive:true}
-  );
+  /* ========================================================
+     MENÚ MÓVIL
+     ======================================================== */
 
-  updateHeader();
+  const navToggle =
+    document.getElementById("navToggle");
 
-})();
-
-
-/* ==========================================================
-   MENÚ MÓVIL
-   ========================================================== */
-
-(function mobileNav(){
-
-  const toggle =
-    document.getElementById('navToggle');
-
-  const nav =
-    document.getElementById('mainNav');
-
-  if(!toggle || !nav) return;
+  const mainNav =
+    document.getElementById("mainNav");
 
 
-  toggle.addEventListener(
-    'click',
-    () => {
+  if (navToggle && mainNav){
 
-      const isOpen =
-        nav.classList.toggle('is-open');
+    navToggle.addEventListener(
+      "click",
+      () => {
 
-      toggle.setAttribute(
-        'aria-expanded',
-        String(isOpen)
-      );
+        const isOpen =
+          mainNav.classList.toggle("is-open");
 
-    }
-  );
-
-
-  nav.querySelectorAll('a').forEach(
-    link => {
-
-      link.addEventListener(
-        'click',
-        () => {
-
-          nav.classList.remove('is-open');
-
-          toggle.setAttribute(
-            'aria-expanded',
-            'false'
-          );
-
-        }
-      );
-
-    }
-  );
-
-})();
-
-
-/* ==========================================================
-   SCROLL REVEAL + STAGGER AUTOMÁTICO
-   No necesita --delay en el HTML
-   ========================================================== */
-
-(function scrollReveal(){
-
-  const items =
-    document.querySelectorAll('.reveal');
-
-  if(!items.length) return;
-
-
-  /* ------------------------------------------
-     Si el usuario prefiere menos movimiento
-     ------------------------------------------ */
-
-  if(reducedMotion){
-
-    items.forEach(
-      item => {
-
-        item.classList.add('is-visible');
-
-        item.style.removeProperty(
-          '--reveal-delay'
+        navToggle.setAttribute(
+          "aria-expanded",
+          String(isOpen)
         );
-
       }
     );
 
-    return;
 
-  }
+    mainNav
+      .querySelectorAll("a")
+      .forEach(link => {
 
+        link.addEventListener(
+          "click",
+          () => {
 
-  /* ------------------------------------------
-     STAGGER POR GRID
-     ------------------------------------------ */
-
-  const grids =
-    document.querySelectorAll(
-      '.card-grid, .cards'
-    );
-
-
-  grids.forEach(
-    grid => {
-
-      const children =
-        Array.from(grid.children)
-          .filter(
-            child =>
-              child.classList.contains('reveal') ||
-              child.classList.contains('card')
-          );
-
-
-      children.forEach(
-        (child, index) => {
-
-          /*
-           * Cada elemento aparece 90ms después
-           * del anterior.
-           */
-
-          child.style.setProperty(
-            '--reveal-delay',
-            `${index * 90}ms`
-          );
-
-          child.classList.add('reveal');
-
-        }
-      );
-
-    }
-  );
-
-
-  /* ------------------------------------------
-     Elementos normales fuera de grids
-     ------------------------------------------ */
-
-  items.forEach(
-    item => {
-
-      if(!item.style.getPropertyValue('--reveal-delay')){
-
-        item.style.setProperty(
-          '--reveal-delay',
-          '0ms'
-        );
-
-      }
-
-    }
-  );
-
-
-  /* ------------------------------------------
-     Intersection Observer
-     ------------------------------------------ */
-
-  if(!('IntersectionObserver' in window)){
-
-    document
-      .querySelectorAll('.reveal')
-      .forEach(
-        item =>
-          item.classList.add('is-visible')
-      );
-
-    return;
-
-  }
-
-
-  const observer =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(
-          entry => {
-
-            if(!entry.isIntersecting) return;
-
-
-            entry.target.classList.add(
-              'is-visible'
+            mainNav.classList.remove(
+              "is-open"
             );
 
-
-            /*
-             * Dejamos de observar el elemento
-             * después de aparecer.
-             */
-
-            observer.unobserve(
-              entry.target
+            navToggle.setAttribute(
+              "aria-expanded",
+              "false"
             );
-
           }
         );
+      });
+  }
 
-      },
-      {
-        threshold:0.15,
 
-        rootMargin:
-          '0px 0px -60px 0px'
+  /* ========================================================
+     SCROLL REVEAL + STAGGER AUTOMÁTICO
+     ======================================================== */
+
+  function scrollReveal(){
+
+    const items =
+      document.querySelectorAll(".reveal");
+
+    if (!items.length) return;
+
+
+    /*
+      Buscamos grids y calculamos automáticamente
+      el retraso según la posición de cada elemento.
+    */
+
+    const grids =
+      document.querySelectorAll(
+        ".card-grid, .meaning-list"
+      );
+
+
+    grids.forEach(grid => {
+
+      const children =
+        grid.querySelectorAll(".reveal");
+
+
+      children.forEach((item,index) => {
+
+        /*
+          Máximo de 5 elementos en cascada.
+          Así evitamos que una sección tarde
+          demasiado en aparecer.
+        */
+
+        const delay =
+          Math.min(index,4) * 90;
+
+        item.style.setProperty(
+          "--reveal-delay",
+          `${delay}ms`
+        );
+      });
+    });
+
+
+    /*
+      Los elementos que no están dentro de
+      un grid reciben un pequeño retraso.
+    */
+
+    items.forEach(item => {
+
+      if (!item.style.getPropertyValue("--reveal-delay")){
+
+        item.style.setProperty(
+          "--reveal-delay",
+          "0ms"
+        );
       }
-    );
+    });
 
 
-  document
-    .querySelectorAll('.reveal')
-    .forEach(
-      item => observer.observe(item)
-    );
+    if (
+      reducedMotion.matches ||
+      !("IntersectionObserver" in window)
+    ){
 
-})();
+      items.forEach(item => {
 
+        item.classList.add(
+          "is-visible"
+        );
 
-/* ==========================================================
-   TILT 3D PARA TARJETAS
-   ========================================================== */
+      });
 
-(function cardTilt(){
-
-  if(reducedMotion) return;
-  if(isTouchDevice) return;
+      return;
+    }
 
 
-  const cards =
-    document.querySelectorAll('.card');
+    const observer =
+      new IntersectionObserver(
+        entries => {
+
+          entries.forEach(entry => {
+
+            if (
+              entry.isIntersecting
+            ){
+
+              entry.target.classList.add(
+                "is-visible"
+              );
+
+              observer.unobserve(
+                entry.target
+              );
+            }
+
+          });
+
+        },
+        {
+          threshold:.12,
+
+          rootMargin:
+            "0px 0px -60px 0px"
+        }
+      );
 
 
-  if(!cards.length) return;
+    items.forEach(item => {
+
+      observer.observe(item);
+
+    });
+  }
+
+  scrollReveal();
 
 
-  cards.forEach(
-    card => {
+  /* ========================================================
+     TILT 3D DE LAS TARJETAS
+     ======================================================== */
+
+  function cardTilt(){
+
+    if (
+      reducedMotion.matches ||
+      isTouchDevice
+    ){
+      return;
+    }
+
+
+    const cards =
+      document.querySelectorAll(
+        ".card"
+      );
+
+
+    cards.forEach(card => {
+
 
       card.addEventListener(
-        'mousemove',
+        "mousemove",
         event => {
 
           const rect =
             card.getBoundingClientRect();
 
 
-          /*
-           * Posición del mouse dentro
-           * de la tarjeta: 0 → 1
-           */
-
           const x =
-            (event.clientX - rect.left)
-            / rect.width;
+            event.clientX - rect.left;
 
           const y =
-            (event.clientY - rect.top)
-            / rect.height;
+            event.clientY - rect.top;
+
+
+          const centerX =
+            rect.width / 2;
+
+          const centerY =
+            rect.height / 2;
 
 
           /*
-           * Convertimos esa posición
-           * en grados.
-           *
-           * Máximo:
-           *  ±5 grados
-           */
+            Máximo aproximado:
+            5 grados de inclinación.
+          */
 
           const rotateY =
-            (x - 0.5) * 10;
+            ((x - centerX) / centerX) * 5;
 
           const rotateX =
-            (0.5 - y) * 10;
+            ((centerY - y) / centerY) * 5;
 
 
           card.style.transform =
-            `
-            perspective(900px)
-            rotateX(${rotateX}deg)
-            rotateY(${rotateY}deg)
-            translateY(-5px)
-            translateZ(8px)
-            `;
-
-        },
-        {passive:true}
-      );
-
-
-      card.addEventListener(
-        'mouseenter',
-        () => {
-
-          card.style.transition =
-            'transform .12s var(--ease-smooth), box-shadow .3s var(--ease-smooth)';
-
+            `perspective(900px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-7px)`;
         }
       );
 
 
       card.addEventListener(
-        'mouseleave',
+        "mouseleave",
         () => {
 
-          card.style.transition =
-            'transform .45s var(--ease-bounce), box-shadow .3s var(--ease-smooth)';
-
-
           card.style.transform =
-            `
-            perspective(900px)
-            rotateX(0deg)
-            rotateY(0deg)
-            translateY(0)
-            translateZ(0)
-            `;
-
+            "perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)";
         }
       );
 
+
+      card.addEventListener(
+        "mouseenter",
+        () => {
+
+          card.style.transition =
+            "transform .12s var(--ease-smooth), box-shadow .3s var(--ease-smooth)";
+        }
+      );
+
+
+    });
+  }
+
+  cardTilt();
+
+
+  /* ========================================================
+     BOTONES MAGNÉTICOS
+     ======================================================== */
+
+  function magneticButtons(){
+
+    if (
+      reducedMotion.matches ||
+      isTouchDevice
+    ){
+      return;
     }
-  );
-
-})();
 
 
-/* ==========================================================
-   BOTONES MAGNÉTICOS
-   ========================================================== */
-
-(function magneticButtons(){
-
-  if(reducedMotion) return;
-  if(isTouchDevice) return;
+    const buttons =
+      document.querySelectorAll(
+        ".magnetic"
+      );
 
 
-  const buttons =
-    document.querySelectorAll(
-      '.btn'
-    );
+    buttons.forEach(button => {
 
-
-  if(!buttons.length) return;
-
-
-  buttons.forEach(
-    button => {
 
       button.addEventListener(
-        'mousemove',
+        "mousemove",
         event => {
 
           const rect =
             button.getBoundingClientRect();
 
 
-          const centerX =
-            rect.left + rect.width / 2;
+          const x =
+            event.clientX -
+            rect.left -
+            rect.width / 2;
 
-          const centerY =
-            rect.top + rect.height / 2;
 
-
-          const distanceX =
-            event.clientX - centerX;
-
-          const distanceY =
-            event.clientY - centerY;
+          const y =
+            event.clientY -
+            rect.top -
+            rect.height / 2;
 
 
           /*
-           * El botón solo sigue una parte
-           * del movimiento del cursor.
-           *
-           * Así se siente magnético
-           * sin salir volando.
-           */
+            Movimiento pequeño y controlado.
+          */
 
           const moveX =
-            distanceX * 0.18;
+            x * .16;
 
           const moveY =
-            distanceY * 0.18;
+            y * .16;
 
 
           button.style.transform =
-            `translate3d(${moveX}px, ${moveY}px, 0) scale(1.02)`;
-
-        },
-        {passive:true}
-      );
-
-
-      button.addEventListener(
-        'mouseenter',
-        () => {
-
-          button.style.transition =
-            'transform .12s var(--ease-smooth), box-shadow .3s var(--ease-smooth), background .25s var(--ease-smooth)';
-
+            `translate(${moveX}px,${moveY}px)`;
         }
       );
 
 
       button.addEventListener(
-        'mouseleave',
+        "mouseleave",
         () => {
 
-          button.style.transition =
-            'transform .4s var(--ease-bounce), box-shadow .3s var(--ease-smooth), background .25s var(--ease-smooth)';
-
           button.style.transform =
-            'translate3d(0,0,0) scale(1)';
-
+            "translate(0,0)";
         }
       );
 
+    });
+  }
+
+  magneticButtons();
+
+
+  /* ========================================================
+     PARALLAX DEL HERO
+     ======================================================== */
+
+  function heroParallax(){
+
+    const heroVisual =
+      document.getElementById(
+        "heroVisual"
+      );
+
+
+    if (
+      !heroVisual ||
+      reducedMotion.matches ||
+      isTouchDevice
+    ){
+      return;
     }
-  );
-
-})();
 
 
-/* ==========================================================
-   PARALLAX DEL HERO
-   El hero-visual se mueve suavemente con el scroll
-   ========================================================== */
-
-(function heroParallax(){
-
-  if(reducedMotion) return;
+    let ticking = false;
 
 
-  const visual =
-    document.querySelector('.hero-visual');
+    const updateParallax = () => {
+
+      const scroll =
+        window.scrollY;
 
 
-  if(!visual) return;
+      /*
+        Movimiento muy suave:
+        máximo aproximado de 55px.
+      */
+
+      const offset =
+        Math.min(scroll * .12,55);
 
 
-  let current = 0;
-  let target = 0;
+      heroVisual.style.transform =
+        `translateY(${offset}px)`;
 
 
-  function updateTarget(){
-
-    /*
-     * Limitamos el parallax para que nunca
-     * se mueva demasiado.
-     */
-
-    target =
-      Math.max(
-        -35,
-        Math.min(
-          35,
-          window.scrollY * 0.12
-        )
-      );
-
-  }
+      ticking = false;
+    };
 
 
-  function animate(){
+    window.addEventListener(
+      "scroll",
+      () => {
 
-    current +=
-      (target - current) * 0.08;
+        if (!ticking){
 
+          window.requestAnimationFrame(
+            updateParallax
+          );
 
-    visual.style.transform =
-      `translate3d(0, ${current}px, 0)`;
+          ticking = true;
+        }
 
-
-    requestAnimationFrame(
-      animate
+      },
+      { passive:true }
     );
-
   }
 
-
-  window.addEventListener(
-    'scroll',
-    updateTarget,
-    {passive:true}
-  );
+  heroParallax();
 
 
-  updateTarget();
+  /* ========================================================
+     CIERRE DEL MENÚ AL HACER CLICK FUERA
+     ======================================================== */
 
-  animate();
+  document.addEventListener(
+    "click",
+    event => {
 
-})();
-
-
-/* ==========================================================
-   MICROINTERACCIÓN DE LOS PILLS
-   ========================================================== */
-
-(function pillsInteraction(){
-
-  if(reducedMotion) return;
-  if(isTouchDevice) return;
-
-
-  document
-    .querySelectorAll('.pill')
-    .forEach(
-      pill => {
-
-        pill.addEventListener(
-          'mouseenter',
-          () => {
-
-            pill.style.transform =
-              'translateY(-4px) rotate(-1deg)';
-
-          }
-        );
-
-
-        pill.addEventListener(
-          'mouseleave',
-          () => {
-
-            pill.style.transform =
-              'translateY(0) rotate(0)';
-
-          }
-        );
-
+      if (
+        !mainNav ||
+        !navToggle
+      ){
+        return;
       }
-    );
-
-})();
 
 
-/* ==========================================================
-   LIMPIEZA AL CAMBIAR TAMAÑO
-   Evita que efectos de escritorio queden
-   activos al pasar a móvil.
-   ========================================================== */
-
-window.addEventListener(
-  'resize',
-  () => {
-
-    if(window.innerWidth <= 720){
-
-      document
-        .querySelectorAll('.card')
-        .forEach(
-          card => {
-
-            card.style.transform =
-              'none';
-
-          }
+      const clickedInsideNav =
+        mainNav.contains(
+          event.target
         );
 
 
-      document
-        .querySelectorAll('.btn')
-        .forEach(
-          button => {
-
-            button.style.transform =
-              'none';
-
-          }
+      const clickedToggle =
+        navToggle.contains(
+          event.target
         );
+
+
+      if (
+        !clickedInsideNav &&
+        !clickedToggle
+      ){
+
+        mainNav.classList.remove(
+          "is-open"
+        );
+
+        navToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+      }
 
     }
+  );
 
-  },
-  {passive:true}
-);
+
+  /* ========================================================
+     ACTUALIZAR REDUCED MOTION
+     ======================================================== */
+
+  reducedMotion.addEventListener(
+    "change",
+    () => {
+
+      if (reducedMotion.matches){
+
+        document
+          .querySelectorAll(".reveal")
+          .forEach(item => {
+
+            item.classList.add(
+              "is-visible"
+            );
+
+          });
+      }
+
+    }
+  );
+
+});
 ```
 
