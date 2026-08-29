@@ -1,450 +1,399 @@
 // ==========================================================
-// NicaLingo
-// SCRIPT.JS
-// Interactividad, animaciones y navegación
+// NicaLingo — Interactividad y animaciones
 // ==========================================================
 
 
 /* ==========================================================
    AÑO DEL FOOTER
-   ========================================================== */
+========================================================== */
 
-const year = document.getElementById("year");
+const year = document.getElementById('year');
 
-if (year) {
-    year.textContent = new Date().getFullYear();
+if(year){
+  year.textContent = new Date().getFullYear();
 }
 
-
-/* ==========================================================
-   HEADER AL HACER SCROLL
-   ========================================================== */
-
-const siteHeader = document.getElementById("siteHeader");
-
-function updateHeader() {
-
-    if (!siteHeader) return;
-
-    if (window.scrollY > 30) {
-
-        siteHeader.classList.add("is-scrolled");
-
-    } else {
-
-        siteHeader.classList.remove("is-scrolled");
-
-    }
-}
-
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    { passive: true }
-);
-
-updateHeader();
-
-
-/* ==========================================================
-   MENÚ MOBILE
-   ========================================================== */
-
-const navToggle = document.getElementById("navToggle");
-const mainNav = document.getElementById("mainNav");
-
-
-if (navToggle && mainNav) {
-
-    navToggle.addEventListener("click", () => {
-
-        const isOpen =
-            mainNav.classList.toggle("is-open");
-
-        navToggle.classList.toggle(
-            "active",
-            isOpen
-        );
-
-        navToggle.setAttribute(
-            "aria-expanded",
-            String(isOpen)
-        );
-
-    });
-
-
-    /* Cerrar menú cuando se selecciona un enlace */
-
-    const navLinks =
-        mainNav.querySelectorAll("a");
-
-    navLinks.forEach(link => {
-
-        link.addEventListener("click", () => {
-
-            mainNav.classList.remove("is-open");
-
-            navToggle.classList.remove("active");
-
-            navToggle.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        });
-
-    });
-
-}
-
-
-/* ==========================================================
-   SCROLL REVEAL
-   ========================================================== */
-
-const revealElements =
-    document.querySelectorAll(".reveal");
-
-
-if ("IntersectionObserver" in window) {
-
-    const revealObserver =
-        new IntersectionObserver(
-
-            (entries, observer) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "is-visible"
-                        );
-
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-
-            {
-                threshold:0.12,
-
-                rootMargin:
-                    "0px 0px -50px 0px"
-            }
-
-        );
-
-
-    revealElements.forEach(element => {
-
-        revealObserver.observe(element);
-
-    });
-
-} else {
-
-    revealElements.forEach(element => {
-
-        element.classList.add(
-            "is-visible"
-        );
-
-    });
-
-}
 
 
 /* ==========================================================
    CURSOR GLOW
-   ========================================================== */
+========================================================== */
 
 (function cursorGlow(){
 
-    const glow =
-        document.getElementById("cursorGlow");
+  const glow = document.getElementById('cursorGlow');
 
-    if (!glow) return;
+  if(!glow){
+    return;
+  }
+
+  // No ejecutar en dispositivos táctiles
+  if(
+    window.matchMedia &&
+    window.matchMedia('(pointer: coarse)').matches
+  ){
+    return;
+  }
 
 
-    /* No ejecutar en dispositivos táctiles */
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
 
-    if (
-        window.matchMedia(
-            "(pointer: coarse)"
-        ).matches
-    ) {
-        return;
+  let currentX = targetX;
+  let currentY = targetY;
+
+
+  window.addEventListener(
+    'mousemove',
+    function(event){
+
+      targetX = event.clientX;
+      targetY = event.clientY;
+
+      glow.classList.add('is-active');
+
+    },
+    {passive:true}
+  );
+
+
+  document.addEventListener(
+    'mouseleave',
+    function(){
+      glow.classList.remove('is-active');
     }
+  );
 
 
-    let targetX =
-        window.innerWidth / 2;
+  function animate(){
 
-    let targetY =
-        window.innerHeight / 2;
+    currentX +=
+      (targetX - currentX) * 0.10;
 
-    let currentX = targetX;
-    let currentY = targetY;
-
-
-    window.addEventListener(
-        "mousemove",
-        event => {
-
-            targetX =
-                event.clientX;
-
-            targetY =
-                event.clientY;
-
-            glow.classList.add(
-                "is-active"
-            );
-
-        },
-        { passive:true }
-    );
+    currentY +=
+      (targetY - currentY) * 0.10;
 
 
-    window.addEventListener(
-        "mouseleave",
-        () => {
-
-            glow.classList.remove(
-                "is-active"
-            );
-
-        }
-    );
+    glow.style.transform =
+      `translate(${currentX}px, ${currentY}px)`;
 
 
-    function animateGlow(){
+    requestAnimationFrame(animate);
 
-        currentX +=
-            (targetX - currentX) * 0.12;
-
-        currentY +=
-            (targetY - currentY) * 0.12;
+  }
 
 
-        glow.style.transform =
-            `translate(${currentX}px, ${currentY}px)`;
-
-
-        requestAnimationFrame(
-            animateGlow
-        );
-    }
-
-
-    animateGlow();
+  animate();
 
 })();
 
 
-/* ==========================================================
-   ANIMACIÓN DE TARJETAS AL PASAR EL MOUSE
-   ========================================================== */
-
-const cards =
-    document.querySelectorAll(
-        ".card, .skill-card, .dark-card"
-    );
-
-
-cards.forEach(card => {
-
-    card.addEventListener(
-        "mouseenter",
-        () => {
-
-            card.style.zIndex = "5";
-
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        () => {
-
-            card.style.zIndex = "";
-
-        }
-    );
-
-});
-
 
 /* ==========================================================
-   EFECTO SUAVE EN EL MEDALLÓN DE COCO
-   ========================================================== */
+   HEADER AL HACER SCROLL
+========================================================== */
 
-const medallion =
-    document.querySelector(".medallion");
+(function headerScroll(){
 
+  const header =
+    document.getElementById('siteHeader');
 
-if (medallion) {
-
-    medallion.addEventListener(
-        "mousemove",
-        event => {
-
-            const rect =
-                medallion.getBoundingClientRect();
-
-            const centerX =
-                rect.left + rect.width / 2;
-
-            const centerY =
-                rect.top + rect.height / 2;
-
-            const rotateX =
-                (event.clientY - centerY) / 35;
-
-            const rotateY =
-                (event.clientX - centerX) / 35;
+  if(!header){
+    return;
+  }
 
 
-            medallion.style.transform =
-                `perspective(700px)
-                 rotateX(${-rotateX}deg)
-                 rotateY(${rotateY}deg)
-                 translateY(-8px)`;
+  function updateHeader(){
 
-        }
-    );
+    if(window.scrollY > 12){
+
+      header.classList.add('is-scrolled');
+
+    }else{
+
+      header.classList.remove('is-scrolled');
+
+    }
+
+  }
 
 
-    medallion.addEventListener(
-        "mouseleave",
-        () => {
+  window.addEventListener(
+    'scroll',
+    updateHeader,
+    {passive:true}
+  );
 
-            medallion.style.transform = "";
 
-        }
-    );
+  updateHeader();
 
-}
+})();
+
 
 
 /* ==========================================================
-   SMOOTH SCROLL PARA ENLACES INTERNOS
-   ========================================================== */
+   MENÚ MÓVIL
+========================================================== */
 
-const internalLinks =
-    document.querySelectorAll(
-        'a[href^="#"]'
-    );
+(function mobileNav(){
 
+  const toggle =
+    document.getElementById('navToggle');
 
-internalLinks.forEach(link => {
-
-    link.addEventListener(
-        "click",
-        event => {
-
-            const targetId =
-                link.getAttribute("href");
-
-            if (
-                !targetId ||
-                targetId === "#"
-            ) {
-                return;
-            }
+  const nav =
+    document.getElementById('mainNav');
 
 
-            const target =
-                document.querySelector(
-                    targetId
-                );
+  if(!toggle || !nav){
+    return;
+  }
 
 
-            if (!target) return;
+  toggle.addEventListener(
+    'click',
+    function(){
+
+      const isOpen =
+        nav.classList.toggle('is-open');
 
 
-            event.preventDefault();
+      toggle.classList.toggle(
+        'is-active',
+        isOpen
+      );
 
 
-            const headerHeight =
-                siteHeader
-                    ? siteHeader.offsetHeight
-                    : 0;
+      toggle.setAttribute(
+        'aria-expanded',
+        String(isOpen)
+      );
+
+    }
+  );
 
 
-            const targetPosition =
-                target.getBoundingClientRect().top
-                +
-                window.scrollY
-                -
-                headerHeight
-                -
-                10;
+  // Cerrar menú al seleccionar un enlace
 
+  nav.querySelectorAll('a').forEach(
+    function(link){
 
-            window.scrollTo({
+      link.addEventListener(
+        'click',
+        function(){
 
-                top:targetPosition,
+          nav.classList.remove(
+            'is-open'
+          );
 
-                behavior:"smooth"
+          toggle.classList.remove(
+            'is-active'
+          );
 
-            });
+          toggle.setAttribute(
+            'aria-expanded',
+            'false'
+          );
 
         }
-    );
+      );
 
-});
+    }
+  );
+
+})();
+
 
 
 /* ==========================================================
-   EFECTO DE ENTRADA DE LA BARRA DE PROGRESO
-   ========================================================== */
+   SCROLL REVEAL
+========================================================== */
 
-const progressBar =
-    document.querySelector(
-        ".progress-fill"
-    );
+(function scrollReveal(){
+
+  const items =
+    document.querySelectorAll('.reveal');
 
 
-if (progressBar) {
+  if(!items.length){
+    return;
+  }
 
-    const progressObserver =
-        new IntersectionObserver(
 
-            entries => {
+  // Si el navegador no soporta
+  // IntersectionObserver
 
-                entries.forEach(entry => {
+  if(!('IntersectionObserver' in window)){
 
-                    if (
-                        entry.isIntersecting
-                    ) {
+    items.forEach(
+      function(element){
 
-                        progressBar.style.animation =
-                            "progressGrow 1.8s cubic-bezier(.2,.8,.2,1) both";
-
-                    }
-
-                });
-
-            },
-
-            {
-                threshold:.5
-            }
-
+        element.classList.add(
+          'is-visible'
         );
 
-
-    progressObserver.observe(
-        progressBar
+      }
     );
 
-}
+    return;
+  }
+
+
+  const observer =
+    new IntersectionObserver(
+      function(entries){
+
+        entries.forEach(
+          function(entry){
+
+            if(entry.isIntersecting){
+
+              entry.target.classList.add(
+                'is-visible'
+              );
+
+
+              // Dejar de observarlo después
+              // de mostrarlo
+
+              observer.unobserve(
+                entry.target
+              );
+
+            }
+
+          }
+        );
+
+      },
+      {
+        threshold:0.15,
+
+        rootMargin:
+          '0px 0px -60px 0px'
+      }
+    );
+
+
+  items.forEach(
+    function(element){
+
+      observer.observe(element);
+
+    }
+  );
+
+})();
+
+
+
+/* ==========================================================
+   EFECTO DE MOVIMIENTO EN COCO
+========================================================== */
+
+(function mascotInteraction(){
+
+  const medallion =
+    document.querySelector('.medallion');
+
+  if(!medallion){
+    return;
+  }
+
+
+  if(
+    window.matchMedia &&
+    window.matchMedia('(pointer: coarse)').matches
+  ){
+    return;
+  }
+
+
+  medallion.addEventListener(
+    'mousemove',
+    function(event){
+
+      const rect =
+        medallion.getBoundingClientRect();
+
+
+      const centerX =
+        rect.left + rect.width / 2;
+
+      const centerY =
+        rect.top + rect.height / 2;
+
+
+      const rotateX =
+        ((event.clientY - centerY) /
+          rect.height) * -6;
+
+
+      const rotateY =
+        ((event.clientX - centerX) /
+          rect.width) * 6;
+
+
+      medallion.style.transform =
+        `perspective(700px)
+         rotateX(${rotateX}deg)
+         rotateY(${rotateY}deg)
+         scale(1.02)`;
+
+    }
+  );
+
+
+  medallion.addEventListener(
+    'mouseleave',
+    function(){
+
+      medallion.style.transform = '';
+
+    }
+  );
+
+})();
+
+
+
+/* ==========================================================
+   CIERRE AUTOMÁTICO SI CAMBIA A PANTALLA GRANDE
+========================================================== */
+
+window.addEventListener(
+  'resize',
+  function(){
+
+    if(window.innerWidth > 720){
+
+      const nav =
+        document.getElementById('mainNav');
+
+      const toggle =
+        document.getElementById('navToggle');
+
+
+      if(nav){
+        nav.classList.remove(
+          'is-open'
+        );
+      }
+
+
+      if(toggle){
+
+        toggle.classList.remove(
+          'is-active'
+        );
+
+        toggle.setAttribute(
+          'aria-expanded',
+          'false'
+        );
+
+      }
+
+    }
+
+  }
+);
