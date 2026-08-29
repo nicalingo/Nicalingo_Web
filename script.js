@@ -125,11 +125,23 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        REVEAL SYSTEM
        ===================================================== */
+const reveals = document.querySelectorAll(".reveal");
 
-    const reveals =
-        document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${i * 0.08}s`;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
 
-
+  reveals.forEach(el => observer.observe(el));
+}
     /*
        Primero nos aseguramos de que todos
        puedan ser mostrados por JavaScript.
