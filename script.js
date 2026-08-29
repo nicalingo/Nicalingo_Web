@@ -20,7 +20,7 @@ if(year){
 
 
 /* ==========================================================
-   CURSOR GLOW
+   CURSOR GLOW — LUZ SUAVE + INERCIA + CLICK
 ========================================================== */
 
 (function cursorGlow(){
@@ -42,13 +42,18 @@ if(year){
     return;
   }
 
-
   let targetX = window.innerWidth / 2;
   let targetY = window.innerHeight / 2;
 
   let currentX = targetX;
   let currentY = targetY;
 
+  let visible = false;
+
+
+  /* --------------------------------------------------------
+     MOVIMIENTO DEL CURSOR
+  -------------------------------------------------------- */
 
   window.addEventListener(
     'mousemove',
@@ -57,7 +62,24 @@ if(year){
       targetX = event.clientX;
       targetY = event.clientY;
 
+      if(!visible){
+        currentX = targetX;
+        currentY = targetY;
+        visible = true;
+      }
+
       glow.classList.add('is-active');
+
+      /* Variables para otros efectos */
+      document.documentElement.style.setProperty(
+        '--mouse-x',
+        `${event.clientX}px`
+      );
+
+      document.documentElement.style.setProperty(
+        '--mouse-y',
+        `${event.clientY}px`
+      );
 
     },
     {passive:true}
@@ -68,29 +90,60 @@ if(year){
     'mouseleave',
     function(){
       glow.classList.remove('is-active');
+      visible = false;
     }
   );
 
 
+  /* --------------------------------------------------------
+     ANIMACIÓN CON INERCIA
+  -------------------------------------------------------- */
+
   function animate(){
 
     currentX +=
-      (targetX - currentX) * 0.1;
+      (targetX - currentX) * 0.075;
 
     currentY +=
-      (targetY - currentY) * 0.1;
-
+      (targetY - currentY) * 0.075;
 
     glow.style.transform =
-      `translate(${currentX}px, ${currentY}px)`;
-
+      `translate3d(${currentX}px, ${currentY}px, 0)`;
 
     requestAnimationFrame(animate);
 
   }
 
-
   animate();
+
+
+  /* --------------------------------------------------------
+     DESTELLO AL HACER CLICK
+  -------------------------------------------------------- */
+
+  window.addEventListener(
+    'click',
+    function(event){
+
+      const ripple =
+        document.createElement('span');
+
+      ripple.className = 'cursor-ripple';
+
+      ripple.style.left =
+        `${event.clientX}px`;
+
+      ripple.style.top =
+        `${event.clientY}px`;
+
+      document.body.appendChild(ripple);
+
+      setTimeout(function(){
+        ripple.remove();
+      }, 650);
+
+    }
+  );
 
 })();
 
